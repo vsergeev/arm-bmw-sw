@@ -1,13 +1,22 @@
 # Project Name
 PROJECT = blink
 # List of the objects files to be made
-OBJECTS = lpc11xx/system_LPC11xx.o startup.o main.o
+SOURCES = lpc11xx/system_LPC11xx.c startup.c main.c
 # Linker script
 LINKER_SCRIPT = lpc1114.dld
+
+#########################################################################
+
+OBJDIR = obj
+OBJECTS = $(patsubst %.c,$(OBJDIR)/%.o,$(SOURCES))
+
+#########################################################################
 
 OPT = -Os
 DEBUG =
 INCLUDES = -Icore/ -Ilpc11xx/
+
+#########################################################################
 
 # Compiler Options
 CFLAGS = -fno-common -mcpu=cortex-m0 -mthumb
@@ -58,8 +67,13 @@ clean:
 
 #########################################################################
 
-%.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJECTS): | $(OBJDIR)
 
-#########################################################################
+$(OBJDIR):
+	mkdir $(OBJDIR)
+	mkdir $(OBJDIR)/lpc11xx
+	mkdir $(OBJDIR)/core
+
+$(OBJDIR)/%.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
