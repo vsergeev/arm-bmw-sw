@@ -109,17 +109,19 @@ void *vector_table[] __attribute__ ((section(".vectors"))) = {
 };
 
 void Reset_Handler(void) {
-    uint32_t *src, *dst;
+    uint8_t *src, *dst;
 
-    /* Copy data section from flash to RAM */
-    src = &_end_text;
-    dst = &_start_data;
-    while (dst < &_end_data)
+    /* Copy with byte pointers to obviate unaligned access problems */
+
+    /* Copy data section from Flash to RAM */
+    src = (uint8_t *)&_end_text;
+    dst = (uint8_t *)&_start_data;
+    while (dst < (uint8_t *)&_end_data)
         *dst++ = *src++;
 
     /* Clear the bss section */
-    dst = &_start_bss;
-    while (dst < &_end_bss)
+    dst = (uint8_t *)&_start_bss;
+    while (dst < (uint8_t *)&_end_bss)
         *dst++ = 0;
 
     main();
