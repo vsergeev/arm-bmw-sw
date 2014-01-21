@@ -33,6 +33,8 @@ SECTIONS {
 		_end_data = .;
 	} >sram AT >flash
 
+	. = ALIGN(4);
+
 	.bss :
 	{
 		_start_bss = .;
