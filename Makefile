@@ -1,7 +1,7 @@
 # Project Name
 PROJECT = blink
 # List of the objects files to be made
-SOURCES = lpc11xx/system_LPC11xx.c startup.c main.c
+SOURCES = lpc11xx/system_LPC11xx.c startup.c main.c uart.c debug.c
 # Linker script
 LINKER_SCRIPT = lpc1114.dld
 
@@ -12,9 +12,9 @@ OBJECTS = $(patsubst %.c,$(OBJDIR)/%.o,$(SOURCES))
 
 #########################################################################
 
-OPT = -Os
+OPT = -Os -g
 DEBUG =
-INCLUDES = -Icore/ -Ilpc11xx/
+INCLUDES = -Icore/ -I.
 
 #########################################################################
 

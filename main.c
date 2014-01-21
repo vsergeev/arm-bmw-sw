@@ -1,6 +1,9 @@
 #include <stdint.h>
 
-#include "LPC11xx.h"
+#include <lpc11xx/LPC11xx.h>
+
+#include "uart.h"
+#include "debug.h"
 
 volatile uint32_t msTicks = 0;
 
@@ -17,6 +20,8 @@ void delay_ms(uint32_t ms) {
 int main(void) {
     SystemInit();
     SystemCoreClockUpdate();
+    SysTick_Config(SystemCoreClock/1000);
+
     #if 1
     /* Main clock on P0_1 for debug */
     LPC_SYSCON->CLKOUTCLKSEL = 3;
@@ -25,14 +30,17 @@ int main(void) {
     LPC_SYSCON->CLKOUTUEN = 1;
     LPC_IOCON->PIO0_1 = 0x1;
     #endif
-    SysTick_Config(SystemCoreClock/1000);
 
-    LPC_GPIO0->DIR = (1<<7);
+    uart_init();
+
+    char buf[32];
+
     while (1) {
-        LPC_GPIO0->DATA = (1<<7);
-        delay_ms(125);
-        LPC_GPIO0->DATA = 0;
-        delay_ms(125);
+        uart_puts("type something: ");
+        uart_gets(buf, sizeof(buf));
+        uart_putc('\n');
+        debug_printf("got _%s_\n", buf);
+        delay_ms(250);
     }
 
     return 0;
