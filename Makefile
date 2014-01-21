@@ -33,6 +33,9 @@ REMOVE = rm -f
 
 all: $(PROJECT).hex $(PROJECT).bin
 
+flash: $(PROJECT).hex
+	lpc21isp -verify $(PROJECT).hex /dev/ttyUSB1 115200 12000000
+
 $(PROJECT).bin: $(PROJECT).elf
 	$(OBJCOPY) -R .stack -R .bss -O binary -S $(PROJECT).elf $(PROJECT).bin
 
