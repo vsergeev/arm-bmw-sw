@@ -130,7 +130,7 @@
 #define SYSPLLCTRL_Val        0x00000023
 #define MAINCLKSEL_Val        0x00000003
 #define SYSAHBCLKDIV_Val      0x00000001
-#define AHBCLKCTRL_Val        0x0001005F
+#define AHBCLKCTRL_Val        0x0001187F
 #define SSP0CLKDIV_Val        0x00000001
 #define UARTCLKDIV_Val        0x00000001
 #define SSP1CLKDIV_Val        0x00000001
