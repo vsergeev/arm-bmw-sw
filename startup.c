@@ -2,7 +2,7 @@
 
 /* Addresses pulled in from the linker script */
 extern uint32_t _end_stack;
-extern uint32_t _end_text;
+extern uint32_t _start_data_flash;
 extern uint32_t _start_data;
 extern uint32_t _end_data;
 extern uint32_t _start_bss;
@@ -114,7 +114,7 @@ void Reset_Handler(void) {
     /* Copy with byte pointers to obviate unaligned access problems */
 
     /* Copy data section from Flash to RAM */
-    src = (uint8_t *)&_end_text;
+    src = (uint8_t *)&_start_data_flash;
     dst = (uint8_t *)&_start_data;
     while (dst < (uint8_t *)&_end_data)
         *dst++ = *src++;

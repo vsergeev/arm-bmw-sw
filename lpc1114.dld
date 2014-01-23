@@ -23,7 +23,6 @@ SECTIONS {
 		*(.text)
 		*(.rodata)
 		*(.rodata*)
-		_end_text = .;
 	} >flash
 
 	.data :
@@ -32,6 +31,8 @@ SECTIONS {
 		*(.data)
 		_end_data = .;
 	} >sram AT >flash
+
+    _start_data_flash = LOADADDR(.data);
 
 	. = ALIGN(4);
 
