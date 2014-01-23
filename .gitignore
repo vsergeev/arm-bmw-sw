@@ -4,3 +4,4 @@
 *.map
 *.o
 *.swp
+.syntastic_c_config

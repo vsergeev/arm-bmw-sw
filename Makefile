@@ -1,6 +1,6 @@
 # Project Name
-PROJECT = blink
-# List of the objects files to be made
+PROJECT = arm-bmw-selftest
+# Source files
 SOURCES = lpc11xx/system_LPC11xx.c startup.c main.c uart.c debug.c
 # Linker script
 LINKER_SCRIPT = lpc1114.dld
@@ -40,9 +40,18 @@ REMOVE = rm -f
 
 #########################################################################
 
-all: $(PROJECT).hex $(PROJECT).bin
+all: clean $(PROJECT).hex $(PROJECT).bin
 
-flash: $(PROJECT).hex
+flash: $(PROJECT).elf
+	openocd -s openocd -f openocd/flash.cfg
+
+debug: $(PROJECT).elf
+	openocd -s openocd -f openocd/debug.cfg
+
+gdb: $(PROJECT).elf
+	$(CROSS)gdb
+
+flashisp: $(PROJECT).hex
 	lpc21isp -verify $(PROJECT).hex /dev/ttyUSB1 115200 12000000
 
 $(PROJECT).bin: $(PROJECT).elf
@@ -59,7 +68,7 @@ stats: $(PROJECT).elf
 	$(SIZE) $(PROJECT).elf
 
 clean:
-	$(REMOVE) $(OBJECTS)
+	$(REMOVE) -r $(OBJDIR)
 	$(REMOVE) $(PROJECT).elf
 	$(REMOVE) $(PROJECT).hex
 	$(REMOVE) $(PROJECT).bin
