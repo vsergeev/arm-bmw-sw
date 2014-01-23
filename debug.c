@@ -102,6 +102,10 @@ void debug_printf(const char *fmt, ...) {
                 uint32_t value = va_arg(ap, uint32_t);
                 p = format32_unsigned(buf, sizeof(buf), value, 10, "0123456789");
                 numpad -= strlen(p);
+            } else if (*fmt == 'p') {
+                uintptr_t value = va_arg(ap, uintptr_t);
+                p = format32_unsigned(buf, sizeof(buf), value, 16, "0123456789abcdef");
+                numpad = 8 - strlen(p);
             } else if (*fmt == 'c') {
                 char value = va_arg(ap, int);
                 buf[0] = value;
