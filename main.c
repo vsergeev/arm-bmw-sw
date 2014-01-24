@@ -1,20 +1,32 @@
 #include <stdint.h>
-
+#include <string.h>
 #include <lpc11xx/LPC11xx.h>
 
+#include "tick.h"
 #include "uart.h"
 #include "debug.h"
+#include "spi.h"
+#include "test.h"
 
-volatile uint32_t msTicks = 0;
+void test_uart(void) {
+    char buf[32];
 
-void SysTick_Handler(void) {
-    msTicks++;
-}
+    ptest();
 
-void delay_ms(uint32_t ms) {
-    uint32_t now = msTicks;
-    while ((msTicks-now) < ms)
-        ;
+    pokay("UART puts() works");
+
+    do {
+        pinteract("UART getc() works");
+    } while(1);
+
+    debug_printf("enter the string banana: ");
+    uart_gets(buf, sizeof(buf), true);
+    if (strcmp(buf, "banana") == 0)
+        pokay("UART gets() works, got banana");
+    else
+        pfail("expected banana, got \"%s\"", buf);
+
+    pokay("fancy printf 0x%04x 0x%04X 0b%08b %d %u \"%s\"", 0xcafe, 0xcafe, 0x55, -1, -1, "test");
 }
 
 int main(void) {
@@ -22,25 +34,13 @@ int main(void) {
     SystemCoreClockUpdate();
     SysTick_Config(SystemCoreClock/1000);
 
-    #if 1
-    /* Main clock on P0_1 for debug */
-    LPC_SYSCON->CLKOUTCLKSEL = 3;
-    LPC_SYSCON->CLKOUTDIV = 1;
-    LPC_SYSCON->CLKOUTUEN = 0;
-    LPC_SYSCON->CLKOUTUEN = 1;
-    LPC_IOCON->PIO0_1 = 0x1;
-    #endif
-
     uart_init();
 
-    char buf[32];
+    debug_printf("\n\narm-bmw self-test version " STR_VERSION "\n");
 
     while (1) {
-        uart_puts("type something: ");
-        uart_gets(buf, sizeof(buf));
-        uart_putc('\n');
-        debug_printf("got _%s_\n", buf);
-        delay_ms(250);
+        test_uart();
+        delay_ms(1000);
     }
 
     return 0;

@@ -1,3 +1,6 @@
+#include <stdint.h>
+#include <stdbool.h>
+
 #include "uart.h"
 #include <lpc11xx/LPC11xx.h>
 
@@ -59,11 +62,13 @@ void uart_puts(const char *s) {
         uart_putc(*s++);
 }
 
-void uart_gets(char *s, size_t count) {
+void uart_gets(char *s, size_t count, bool echo) {
     unsigned int i;
 
     for (i = 0; i < count-1; i++) {
         *s = uart_getc();
+        if (echo)
+            uart_putc(*s);
         if (*s == '\n')
             break;
         s++;
