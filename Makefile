@@ -1,7 +1,7 @@
 # Project Name
 PROJECT = arm-bmw-selftest
 # Source files
-SOURCES = lpc11xx/system_LPC11xx.c startup.c main.c uart.c debug.c
+SOURCES = lpc11xx/system_LPC11xx.c startup.c tick.c uart.c debug.c main.c
 # Linker script
 LINKER_SCRIPT = lpc1114.dld
 
@@ -12,14 +12,16 @@ OBJECTS = $(patsubst %.c,$(OBJDIR)/%.o,$(SOURCES))
 
 #########################################################################
 
-OPT = -Os -g
-DEBUG =
+OPT = -Os
+DEBUG = -g
 INCLUDES = -Icore/ -I.
+GIT_VERSION = $(shell git describe --abbrev --always --dirty)
 
 #########################################################################
 
 # Compiler Options
-CFLAGS = -fno-common -mcpu=cortex-m0 -mthumb
+CFLAGS = -DGIT_VERSION=\"$(GIT_VERSION)\"
+CFLAGS += -fno-common -mcpu=cortex-m0 -mthumb
 CFLAGS += $(OPT) $(DEBUG) $(INCLUDES)
 CFLAGS += -Wall -Wextra
 CFLAGS += -Wcast-align -Wcast-qual -Wimplicit -Wpointer-arith -Wswitch -Wredundant-decls -Wreturn-type -Wshadow -Wunused
