@@ -20,7 +20,7 @@ extern struct spi_master SPI0;
 void spi_init(void);
 void spi_setup(struct spi_slave *slave);
 void spi_select(struct spi_slave *slave);
-void spi_transfer(struct spi_slave *slave, uint8_t *txbuf, uint8_t *rxbuf, size_t len);
+void spi_transfer(struct spi_slave *slave, const uint8_t *txbuf, uint8_t *rxbuf, size_t len);
 void spi_deselect(struct spi_slave *slave);
 
 #endif

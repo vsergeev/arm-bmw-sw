@@ -100,9 +100,9 @@ void spi_deselect(struct spi_slave *slave) {
         LPC_GPIO1->MASKED_ACCESS[(1 << (slave->cs_pin-12))] = value;
 }
 
-void spi_transfer(struct spi_slave *slave, uint8_t *txbuf, uint8_t *rxbuf, size_t len) {
+void spi_transfer(struct spi_slave *slave, const uint8_t *txbuf, uint8_t *rxbuf, size_t len) {
     unsigned int txi, rxi;
-    volatile uint8_t data;
+    volatile uint8_t dummy;
 
     dbg("%s: transfer start txbuf=%p, rxbuf=%p, len=%d\n", __func__, txbuf, rxbuf, len);
 
@@ -111,13 +111,21 @@ void spi_transfer(struct spi_slave *slave, uint8_t *txbuf, uint8_t *rxbuf, size_
      * frequency. */
     for (txi = 0, rxi = 0; rxi < len; ) {
         /* While TX FIFO is not full, txbuf has bytes left, and the TX/RX gap is less than FIFO size */
-        while ((slave->master->ssp->SR & (1<<1)) && (txi < len) && ((txi - rxi) < 8))
-            slave->master->ssp->DR = txbuf[txi++];
+        while ((slave->master->ssp->SR & (1<<1)) && (txi < len) && ((txi - rxi) < 8)) {
+            if (txbuf)
+                slave->master->ssp->DR = txbuf[txi];
+            else
+                slave->master->ssp->DR = 0xff;
+            txi++;
+        }
         /* While the Receive FIFO is not empty, and rxbuf has bytes left */
         while ((slave->master->ssp->SR & (1<<2)) && (rxi < len)) {
-            data = slave->master->ssp->DR;
             if (rxbuf)
-                rxbuf[rxi] = data;
+                rxbuf[rxi] = slave->master->ssp->DR;
+            else {
+                dummy = slave->master->ssp->DR;
+                dummy;
+            }
             rxi++;
         }
     }
@@ -126,16 +134,20 @@ void spi_transfer(struct spi_slave *slave, uint8_t *txbuf, uint8_t *rxbuf, size_
     unsigned int i;
     for (i = 0; i < len; i++) {
         /* While TX FIFO is not empty */
-        while (!(slave->master->ssp->SR & (1 << 0)))
+        while (!(slave->master->ssp->SR & (1<<0)))
             ;
-        slave->master->ssp->DR = txbuf[i];
+        if (txbuf)
+            slave->master->ssp->DR = txbuf[i];
+        else
+            slave->master->ssp->DR = 0xff;
 
         /* While RX FIFO is empty */
-        while (!(slave->master->ssp->SR & (1 << 2)))
+        while (!(slave->master->ssp->SR & (1<<2)))
             ;
-        data = slave->master->ssp->DR;
         if (rxbuf)
-            rxbuf[i] = data;
+            rxbuf[i] = slave->master->ssp->DR;
+        else
+            dummy = slave->master->ssp->DR;
     }
     #endif
 }
