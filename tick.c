@@ -9,6 +9,10 @@ void SysTick_Handler(void) {
     msTicks++;
 }
 
+uint32_t time(void) {
+    return msTicks;
+}
+
 void delay_ms(uint32_t ms) {
     uint32_t now = msTicks;
     while ((msTicks-now) < ms)
