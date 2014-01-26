@@ -4,48 +4,48 @@ ENTRY(Reset_Handler)
 
 MEMORY
 {
-	flash	:	ORIGIN = 0x00000000, LENGTH = 32k
-	sram	:	ORIGIN = 0x10000000, LENGTH = 4k
+    flash    :    ORIGIN = 0x00000000, LENGTH = 32k
+    sram    :    ORIGIN = 0x10000000, LENGTH = 4k
 }
 
 _end_stack = 0x10000FFC;
 
 SECTIONS {
-	. = ORIGIN(flash);
+    . = ORIGIN(flash);
 
-	vectors :
-	{
-		*(.vectors)
-	} >flash
+    vectors :
+    {
+        *(.vectors)
+    } >flash
 
-	.text :
-	{
-		*(.text)
-		*(.rodata)
-		*(.rodata*)
-	} >flash
+    .text :
+    {
+        *(.text)
+        *(.rodata)
+        *(.rodata*)
+    } >flash
 
-	.data :
-	{
-		_start_data = .;
-		*(.data)
-		_end_data = .;
-	} >sram AT >flash
+    .data :
+    {
+        _start_data = .;
+        *(.data)
+        _end_data = .;
+    } >sram AT >flash
 
     _start_data_flash = LOADADDR(.data);
 
-	. = ALIGN(4);
+    . = ALIGN(4);
 
-	.bss :
-	{
-		_start_bss = .;
-		*(.bss)
-		_end_bss = .;
-	} >sram
+    .bss :
+    {
+        _start_bss = .;
+        *(.bss)
+        _end_bss = .;
+    } >sram
 
-	. = ALIGN(4);
+    . = ALIGN(4);
 
-	_start_stack = .;
+    _start_stack = .;
 }
 
 _end = .;
