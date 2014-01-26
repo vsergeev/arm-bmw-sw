@@ -1,7 +1,7 @@
 # Project Name
 PROJECT = arm-bmw-selftest
 # Source files
-SOURCES = lpc11xx/system_LPC11xx.c startup.c tick.c uart.c debug.c spi.c main.c
+SOURCES = lpc11xx/system_LPC11xx.c startup.c tick.c uart.c debug.c spi.c sf.c main.c
 # Linker script
 LINKER_SCRIPT = lpc1114.dld
 
