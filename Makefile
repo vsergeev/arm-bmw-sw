@@ -1,7 +1,8 @@
 # Project Name
 PROJECT = arm-bmw-selftest
 # Source files
-SOURCES = lpc11xx/system_LPC11xx.c startup.c tick.c uart.c debug.c spi.c sf.c main.c
+SOURCES_TESTS = tests/uart.c tests/spi.c tests/spi_flash.c
+SOURCES = lpc11xx/system_LPC11xx.c startup.c tick.c uart.c debug.c spi.c sf.c $(SOURCES_TESTS) main.c
 # Linker script
 LINKER_SCRIPT = lpc1114.dld
 
@@ -84,6 +85,7 @@ $(OBJDIR):
 	mkdir $(OBJDIR)
 	mkdir $(OBJDIR)/lpc11xx
 	mkdir $(OBJDIR)/core
+	mkdir $(OBJDIR)/tests
 
 $(OBJDIR)/%.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
