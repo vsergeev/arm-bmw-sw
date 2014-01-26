@@ -63,17 +63,40 @@ void uart_puts(const char *s) {
 }
 
 void uart_gets(char *s, size_t count, bool echo) {
+    uint8_t c;
     unsigned int i;
 
-    for (i = 0; i < count-1; i++) {
-        *s = uart_getc();
-        if (echo)
-            uart_putc(*s);
-        if (*s == '\n')
+    i = 0;
+    while (1) {
+        c = uart_getc();
+
+        /* Newline */
+        if (c == '\n') {
+            if (echo)
+                uart_putc(c);
             break;
-        s++;
+
+        /* Backspace/Delete */
+        } else if (c == 0x7f || c == 0x08) {
+            /* Do nothing for i == 0 */
+            if (i == 0)
+                continue;
+
+            /* i > 0 */
+            i -= 1;
+            if (echo)
+                uart_putc(0x08);
+
+        /* All other characters */
+        } else {
+            if (i < count-1)
+                s[i++] = c;
+            if (echo)
+                uart_putc(c);
+        }
     }
-    *s = '\0';
+
+    s[i] = '\0';
 }
 
 void uart_read(uint8_t *buf, size_t count) {
