@@ -50,7 +50,7 @@ void debug_printf(const char *fmt, ...) {
     va_list ap;
     enum printf_state state = STATE_COPY;
     char buf[64], *p;
-    char charpad;
+    char charpad = ' ';
     int numpad = 0;
 
     va_start(ap, fmt);
@@ -105,6 +105,7 @@ void debug_printf(const char *fmt, ...) {
             } else if (*fmt == 'p') {
                 uintptr_t value = va_arg(ap, uintptr_t);
                 p = format32_unsigned(buf, sizeof(buf), value, 16, "0123456789abcdef");
+                charpad = '0';
                 numpad = 8 - strlen(p);
             } else if (*fmt == 'c') {
                 char value = va_arg(ap, int);
