@@ -28,7 +28,8 @@ int main(void) {
         //test_uart();
         //test_spi();
         //test_spi_flash();
-        test_i2c();
+        //test_i2c();
+        test_mcp23008();
         delay_ms(1000);
     }
 
