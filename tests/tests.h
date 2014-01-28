@@ -4,6 +4,7 @@
 void test_uart(void);
 void test_spi(void);
 void test_spi_flash(void);
+void test_i2c(void);
 
 #endif
 

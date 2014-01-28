@@ -10,11 +10,15 @@
 
 #define SPI_PCLK            48000000
 
+/**********************************************************************/
+
 struct spi_master {
     LPC_SSP_TypeDef *ssp;
 };
 
 struct spi_master SPI0;
+
+/**********************************************************************/
 
 void spi_init(void) {
     /* Configure P0.8 for MISO, P0.9 for MOSI, P0.6 for SCK function */

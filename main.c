@@ -7,6 +7,7 @@
 #include "uart.h"
 #include "debug.h"
 #include "spi.h"
+#include "i2c.h"
 #include "sf.h"
 #include "test.h"
 
@@ -19,13 +20,15 @@ int main(void) {
 
     uart_init();
     spi_init();
+    i2c_init();
 
     debug_printf("\n\narm-bmw self-test version " STR_VERSION "\n");
 
     while (1) {
-        test_uart();
-        test_spi();
-        test_spi_flash();
+        //test_uart();
+        //test_spi();
+        //test_spi_flash();
+        test_i2c();
         delay_ms(1000);
     }
 

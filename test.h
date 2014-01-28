@@ -47,7 +47,7 @@
         uart_puts(STR_TAB); \
         debug_printf(fmt, ##__VA_ARGS__); \
         uart_puts(" (y/n/r) "); \
-        uart_gets(_buf, sizeof(buf), true); \
+        uart_gets(_buf, sizeof(_buf), true); \
         if (_buf[0] == 'y' || _buf[0] == 'Y') { \
             pokay(fmt, ##__VA_ARGS__); \
             break; \
