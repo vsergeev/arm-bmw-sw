@@ -2,6 +2,13 @@
 #include <stdbool.h>
 #include "queue.h"
 
+#ifndef QUEUE_TEST
+#include "lock.h"
+#else
+#define system_lock()
+#define system_unlock()
+#endif
+
 /*
     Circular buffer indexing semantics used below
 
@@ -71,9 +78,13 @@ void queue_init(struct queue *q, int capacity) {
 
 int queue_enqueue(struct queue *q, void *object) {
     /* Lock queue here */
+    system_lock();
 
-    if (_queue_is_full(q))
+    if (_queue_is_full(q)) {
+        /* Unlock queue here */
+        system_unlock();
         return -1;
+    }
 
     q->objects[q->widx] = object;
     q->widx = (q->widx + 1) % q->cap;
@@ -81,6 +92,7 @@ int queue_enqueue(struct queue *q, void *object) {
         q->empty = false;
 
     /* Unlock queue here */
+    system_unlock();
 
     return 0;
 }
@@ -89,9 +101,13 @@ void *queue_dequeue(struct queue *q) {
     void *object;
 
     /* Lock queue here */
+    system_lock();
 
-    if (_queue_is_empty(q))
+    if (_queue_is_empty(q)) {
+        /* Unlock queue here */
+        system_unlock();
         return NULL;
+    }
 
     object = q->objects[q->ridx];
     q->ridx = (q->ridx + 1) % q->cap;
@@ -99,6 +115,7 @@ void *queue_dequeue(struct queue *q) {
         q->empty = true;
 
     /* Unlock queue here */
+    system_unlock();
 
     return object;
 }
