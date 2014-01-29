@@ -57,6 +57,10 @@ void uart_putc(char c) {
         ;
 }
 
+bool uart_poll(void) {
+    return !!(LPC_UART->LSR & (1<<0));
+}
+
 void uart_puts(const char *s) {
     while (*s != '\0')
         uart_putc(*s++);
