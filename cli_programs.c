@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "uart.h"
 #include "debug.h"
 
 #include "tick.h"
@@ -77,15 +78,19 @@ static void prog_led(int argc, char **argv) {
 
 static void prog_buttons(int argc, char **argv) {
     uint8_t state;
+    uint8_t c = 0;
 
-    bmw_ui_button_debounce();
-    bmw_ui_button_debounce();
-    state = bmw_ui_button_state();
+    debug_printf("Press 'q' to quit.\n");
+    do {
+        bmw_ui_button_debounce();
+        state = bmw_ui_button_state();
 
-    debug_printf("BT0:  %b\n", !!(state & BMW_BT0));
-    debug_printf("BT1:  %b\n", !!(state & BMW_BT1));
-    debug_printf("SW0:  %b\n", !!(state & BMW_SW0));
-    debug_printf("SW1:  %b\n", !!(state & BMW_SW1));
+        debug_printf("\rBT0: %b  BT1: %b  SW0: %b  SW1: %b  ", !!(state & BMW_BT0), !!(state & BMW_BT1), !!(state & BMW_SW0), !!(state & BMW_SW1));
+        delay_ms(50);
+        if (uart_poll())
+            c = uart_getc();
+    } while (c != 'q');
+    debug_printf("\n");
 }
 
 static void prog_time(int argc, char **argv) {
