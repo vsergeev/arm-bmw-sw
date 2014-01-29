@@ -2,7 +2,6 @@ import math
 
 BR = 115200
 PCLK = 48e6
-PCLK = 24e6
 
 # 13.5.15, pg. 211 of UM10398 LPC111x/LPC11Cxx User manual
 # Baudrate = PCLK / (16*DL*(1 + DivAddVal/MulVal))

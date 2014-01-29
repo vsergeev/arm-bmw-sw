@@ -3,15 +3,14 @@
 
 #include <stdint.h>
 
-#define BMW_LED1    (1<<4)
-#define BMW_LED2    (1<<5)
-#define BMW_LED3    (1<<6)
-#define BMW_LED4    (1<<7)
-
 #define BMW_SW0     (1<<0)
 #define BMW_SW1     (1<<1)
 #define BMW_BT0     (1<<2)
 #define BMW_BT1     (1<<3)
+#define BMW_LED1    (1<<4)
+#define BMW_LED2    (1<<5)
+#define BMW_LED3    (1<<6)
+#define BMW_LED4    (1<<7)
 
 int bmw_ui_init(void);
 
