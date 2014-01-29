@@ -12,6 +12,8 @@
 #include "bmw_ui.h"
 #include "test.h"
 
+#include "cli.h"
+
 #include <tests/tests.h>
 
 int main(void) {
@@ -24,8 +26,12 @@ int main(void) {
     i2c_init();
     bmw_ui_init();
 
-    debug_printf("\n\narm-bmw self-test version " STR_VERSION "\n");
+    /* Enable PIO0.2 for SPI Flash CS */
+    LPC_GPIO0->DIR |= (1<<2);
 
+    debug_printf("\n\narm-bmw self-test version " STR_VERSION "\n\n");
+
+    #ifdef NO_CLI
     while (1) {
         test_uart();
         test_spi();
@@ -35,6 +41,9 @@ int main(void) {
         test_bmw_ui();
         delay_ms(1000);
     }
+    #else
+    cli();
+    #endif
 
     return 0;
 }
