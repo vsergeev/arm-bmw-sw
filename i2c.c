@@ -347,6 +347,8 @@ void i2c_init(void) {
     /* Enable I2C interrupt */
     NVIC_ClearPendingIRQ(I2C_IRQn);
     NVIC_EnableIRQ(I2C_IRQn);
+    /* Set priority 1 (from 0-3, 0 is highest priority) */
+    NVIC_SetPriority(I2C_IRQn, 1);
 
     /* Enable I2C0 controller */
     LPC_I2C->CONSET = I2C_CON_I2EN;

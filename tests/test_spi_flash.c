@@ -180,6 +180,6 @@ void test_spi_flash(void) {
     }
     pokay("Pseudorandom data matches!");
 
-    pokay("All SPI flash tests passed!");
+    pokay("All tests passed!");
 }
 

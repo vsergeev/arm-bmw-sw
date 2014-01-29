@@ -23,5 +23,7 @@ void test_uart(void) {
         pfail("expected banana, got \"%s\"", buf);
 
     pokay("fancy printf 0x%04x 0x%04X 0b%08b %d %u \"%s\"", 0xcafe, 0xcafe, 0x55, -1, -1, "test");
+
+    pokay("All tests passed!");
 }
 
