@@ -1,21 +1,24 @@
 # Project Name
 PROJECT = arm-bmw-selftest
 # Source files
-SOURCES_TESTS = tests/test_uart.c tests/test_spi.c tests/test_spi_flash.c tests/test_i2c.c tests/test_mcp23008.c tests/test_bmw_ui.c
-SOURCES = lpc11xx/system_LPC11xx.c startup.c tick.c uart.c debug.c spi.c sf.c queue.c i2c.c mcp23008.c bmw_ui.c cli.c cli_programs.c $(SOURCES_TESTS) main.c
+TESTS = tests/test_uart.c tests/test_spi.c tests/test_spi_flash.c tests/test_i2c.c tests/test_mcp23008.c tests/test_bmw_ui.c
+SRCS = lpc11xx/system_LPC11xx.c startup.c tick.c uart.c debug.c spi.c sf.c queue.c i2c.c mcp23008.c bmw_ui.c cli.c cli_programs.c $(TESTS) main.c
 # Linker script
 LINKER_SCRIPT = lpc1114.dld
 
 #########################################################################
 
+SRCDIR = src
 OBJDIR = obj
-OBJECTS = $(patsubst %.c,$(OBJDIR)/%.o,$(SOURCES))
+
+SOURCES = $(patsubst %,$(SRCDIR)/%,$(SRCS))
+OBJECTS = $(patsubst %.c,$(OBJDIR)/%.o,$(SRCS))
 
 #########################################################################
 
 OPT = -Os
 DEBUG = -g
-INCLUDES = -Icore/ -I.
+INCLUDES = -Isrc/core/ -Isrc/
 GIT_VERSION = $(shell git describe --abbrev --always --dirty)
 
 #########################################################################
@@ -87,6 +90,6 @@ $(OBJDIR):
 	mkdir $(OBJDIR)/core
 	mkdir $(OBJDIR)/tests
 
-$(OBJDIR)/%.o : %.c
+$(OBJDIR)/%.o : $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
