@@ -18,7 +18,7 @@ OBJECTS = $(patsubst %.c,$(OBJDIR)/%.o,$(SRCS))
 
 OPT = -Os
 DEBUG = -g
-INCLUDES = -Isrc/core/ -Isrc/
+INCLUDES = -Isrc/cmsis/ -Isrc/
 GIT_VERSION = $(shell git describe --abbrev --always --dirty)
 
 #########################################################################
