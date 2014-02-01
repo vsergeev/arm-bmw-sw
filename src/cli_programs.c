@@ -51,6 +51,8 @@ static void prog_test(int argc, char **argv) {
         test_bmw_ui();
     else
         debug_printf("unknown test \"%s\"\n", argv[1]);
+
+    uart_flush();
 }
 
 static void prog_led(int argc, char **argv) {
@@ -101,7 +103,7 @@ static struct spi_slave sf_spi = { .master = &SPI0, .speed = 24000000, .mode = 0
 static struct spi_flash sf = { .spi = NULL, .params = NULL };
 
 static void prog_sf(int argc, char **argv) {
-    char buf[256];
+    uint8_t buf[256];
     uint32_t address, length, length_read;
     unsigned int i;
 
