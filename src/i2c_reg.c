@@ -22,7 +22,6 @@ int i2c_detect(struct i2c_master *i2c, uint8_t address) {
 int i2c_reg_read(struct i2c_master *i2c, uint8_t address, uint8_t reg, uint8_t *data) {
     struct i2c_transaction transaction;
     struct i2c_msg msgs[2];
-    int ret;
 
     /* [S] [Addr W|A] [Reg|A] [S] [Addr|R] [Data|N] [P] */
     msgs[0].buf = &reg;
@@ -61,7 +60,6 @@ int i2c_reg_write(struct i2c_master *i2c, uint8_t address, uint8_t reg, uint8_t 
 int i2c_reg_read_multiple(struct i2c_master *i2c, uint8_t address, uint8_t reg, uint8_t *data, size_t len) {
     struct i2c_transaction transaction;
     struct i2c_msg msgs[2];
-    int ret;
 
     /* [S] [Addr W|A] [Reg|A] [S] [Addr|R] [Data|A] [Data|A] ... [Data|N] [P] */
     msgs[0].buf = &reg;
