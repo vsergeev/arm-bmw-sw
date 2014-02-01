@@ -7,16 +7,16 @@
 
 #include "debug.h"
 
-struct mcp23008 bmw_iox;
-
 #define GPIO_MASK_LED       0xF0
 #define GPIO_MASK_BUTTON    0x0F
 
+struct mcp23008 bmw_iox;
+
 static uint8_t led_state;
+static uint8_t button_debounce;
 static uint8_t button_state;
 static uint8_t button_posedge_state;
 static uint8_t button_negedge_state;
-static uint8_t button_debounce;
 
 #if 0
 void EINT0_Handler(void) {
@@ -42,29 +42,39 @@ int bmw_ui_init(void) {
         return -1;
 
     /* P0-P3 are inputs (Switches), P4-P7 are outputs (LEDs) */
-    mcp23008_reg_write(&bmw_iox, MCP_REG_IODIR, 0x0F);
+    if (mcp23008_reg_write(&bmw_iox, MCP_REG_IODIR, 0x0F) < 0)
+        return -1;
     /* Invert button polarity */
-    mcp23008_reg_write(&bmw_iox, MCP_REG_IPOL, 0x0F);
+    if (mcp23008_reg_write(&bmw_iox, MCP_REG_IPOL, 0x0F) < 0)
+        return -1;
     #if 0
     /* Enable interrupt-on-change for buttons B1, B0 */
-    mcp23008_reg_write(&bmw_iox, MCP_REG_GPINTEN, 0x0C);
+    if (mcp23008_reg_write(&bmw_iox, MCP_REG_GPINTEN, 0x0C) < 0)
+        return -1;
     #else
     /* Disable interrupt-on-change for now */
-    mcp23008_reg_write(&bmw_iox, MCP_REG_GPINTEN, 0x00);
+    if (mcp23008_reg_write(&bmw_iox, MCP_REG_GPINTEN, 0x00) < 0)
+        return -1;
     #endif
     /* Reset default value */
-    mcp23008_reg_write(&bmw_iox, MCP_REG_DEFVAL, 0x00);
+    if (mcp23008_reg_write(&bmw_iox, MCP_REG_DEFVAL, 0x00) < 0)
+        return -1;
     /* Compare to previous pin value for interrupt-on-change */
-    mcp23008_reg_write(&bmw_iox, MCP_REG_INTCON, 0x00);
+    if (mcp23008_reg_write(&bmw_iox, MCP_REG_INTCON, 0x00) < 0)
+        return -1;
     /* Enable INT pin as active-low, open-drain output */
-    mcp23008_reg_write(&bmw_iox, MCP_REG_IOCON, 0x04);
+    if (mcp23008_reg_write(&bmw_iox, MCP_REG_IOCON, 0x04) < 0)
+        return -1;
     /* Disable pull-ups */
-    mcp23008_reg_write(&bmw_iox, MCP_REG_GPPU, 0x00);
+    if (mcp23008_reg_write(&bmw_iox, MCP_REG_GPPU, 0x00) < 0)
+        return -1;
     /* Disable LEDs */
-    mcp23008_reg_write(&bmw_iox, MCP_REG_GPIO, 0xF0);
+    if (mcp23008_reg_write(&bmw_iox, MCP_REG_GPIO, 0xF0) < 0)
+        return -1;
 
     /* Read current state of buttons */
-    mcp23008_reg_read(&bmw_iox, MCP_REG_GPIO, &data);
+    if (mcp23008_reg_read(&bmw_iox, MCP_REG_GPIO, &data) < 0)
+        return -1;
 
     /* Initialize LED and Button state */
     led_state = 0xf0;
@@ -94,6 +104,8 @@ int bmw_ui_init(void) {
     return 0;
 }
 
+/* LEDs are active low */
+
 void bmw_ui_led_set(uint8_t state) {
     led_state = (~state) & GPIO_MASK_LED;
     mcp23008_reg_write(&bmw_iox, MCP_REG_GPIO, led_state);
@@ -108,6 +120,12 @@ void bmw_ui_led_off(uint8_t state) {
     led_state |= (state & GPIO_MASK_LED);
     mcp23008_reg_write(&bmw_iox, MCP_REG_GPIO, led_state);
 }
+
+uint8_t bmw_ui_led_state(void) {
+    return ~led_state & GPIO_MASK_LED;
+}
+
+/* Buttons are active high (due to IPOL setting) */
 
 void bmw_ui_button_debounce(void) {
     uint8_t data, stable, next_button_state;

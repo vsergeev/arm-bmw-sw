@@ -17,6 +17,7 @@ int bmw_ui_init(void);
 void bmw_ui_led_set(uint8_t state);
 void bmw_ui_led_on(uint8_t state);
 void bmw_ui_led_off(uint8_t state);
+uint8_t bmw_ui_led_state(void);
 
 void bmw_ui_button_debounce(void);
 uint8_t bmw_ui_button_state(void);
