@@ -8,6 +8,8 @@
 #include "bmw_ui.h"
 #include "spi.h"
 #include "sf.h"
+#include "i2c_reg.h"
+#include "test.h"
 
 #include "tests/tests.h"
 
@@ -17,10 +19,11 @@ static void prog_help(int argc, char **argv) {
     debug_printf("\nPrograms available\n");
     debug_printf("\thelp            show this help\n");
     debug_printf("\ttest            run a built-in test\n");
-    debug_printf("\tled             manipulate LEDs\n");
+    debug_printf("\tled             turn on/off LEDs\n");
     debug_printf("\tbuttons         read buttons\n");
     debug_printf("\ttime            read system time\n");
-    debug_printf("\tsf              read spi flash\n");
+    debug_printf("\tsf              probe, read spi flash\n");
+    debug_printf("\ti2c             detect, read, write i2c devices\n");
     debug_printf("\n");
 }
 
@@ -145,12 +148,88 @@ static void prog_sf(int argc, char **argv) {
     }
 }
 
+void prog_i2c(int argc, char **argv) {
+    uint8_t address, reg, data;
+    int ret;
+
+    if (argc < 2) {
+        debug_printf("Usage: %s scan\n", argv[0]);
+        debug_printf("Usage: %s detect <address>\n", argv[0]);
+        debug_printf("Usage: %s read <address> <register>\n", argv[0]);
+        debug_printf("Usage: %s write <address> <register> <data>\n", argv[0]);
+        return;
+    }
+
+    if (strcmp(argv[1], "scan") == 0) {
+        bool alive[128];
+        int i;
+
+        memset(alive, 0, sizeof(alive));
+        for (i = 0; i < 128; i++) {
+            if (i2c_detect(&I2C0, i) == 0)
+                alive[i] = true;
+        }
+
+        debug_printf("Detected I2C devices at addresses:\n");
+        for (i = 0; i < 128; i++) {
+            if (alive[i])
+                debug_printf("    0x%02x\n", i);
+        }
+
+    } else if (strcmp(argv[1], "detect") == 0) {
+        if (argc < 3) {
+            debug_printf("missing arguments\n");
+            return;
+        }
+
+        address = strtoul(argv[2], NULL, 0);
+        ret = i2c_detect(&I2C0, address);
+        debug_printf("i2c_detect(): %d\n", ret);
+        if (ret == 0)
+            pokay("detect 0x%02x success", address);
+        else
+            pfail("detect 0x%02x failure");
+
+    } else if (strcmp(argv[1], "read") == 0) {
+        if (argc < 4) {
+            debug_printf("missing arguments\n");
+            return;
+        }
+
+        address = strtoul(argv[2], NULL, 0);
+        reg = strtoul(argv[3], NULL, 0);
+        ret = i2c_reg_read(&I2C0, address, reg, &data);
+        debug_printf("i2c_reg_read(): %d\n", ret);
+        if (ret == 0)
+            pokay("read success, 0x%02x: 0x%02x", reg, data);
+        else
+            pokay("read failure\n");
+
+    } else if (strcmp(argv[1], "write") == 0) {
+        if (argc < 5) {
+            debug_printf("missing arguments\n");
+            return;
+        }
+
+        address = strtoul(argv[2], NULL, 0);
+        reg = strtoul(argv[3], NULL, 0);
+        data = strtoul(argv[4], NULL, 0);
+        ret = i2c_reg_write(&I2C0, address, reg, data);
+        if (ret == 0)
+            pokay("write success");
+        else
+            pokay("write failure");
+
+    }
+}
+
 struct cli_program cli_programs[] = {
     { .name = "help", .func = prog_help },
     { .name = "test", .func = prog_test },
     { .name = "led", .func = prog_led },
     { .name = "buttons", .func = prog_buttons },
     { .name = "time", .func = prog_time },
+    { .name = "i2c", .func = prog_i2c },
     { .name = "sf", .func = prog_sf },
     { .name = NULL, .func = NULL },
 };
