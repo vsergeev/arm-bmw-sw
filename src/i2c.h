@@ -35,8 +35,9 @@ extern struct i2c_master I2C0;
 void i2c_init(void);
 
 /* Asynchronous transfer */
-void i2c_start_transfer(struct i2c_transaction *transaction);
-void i2c_wait_transfer(struct i2c_transaction *transaction);
+void i2c_start_transaction(struct i2c_transaction *transaction);
+bool i2c_status_transaction(struct i2c_transaction *transaction);
+void i2c_wait_transaction(struct i2c_transaction *transaction);
 
 /* Synchronous transfer wrapper */
 int i2c_transfer(struct i2c_transaction *transaction);

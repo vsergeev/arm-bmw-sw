@@ -359,7 +359,7 @@ void i2c_init(void) {
     queue_init((struct queue *)&I2C0.transaction_queue, I2C_QUEUE_SIZE);
 }
 
-void i2c_start_transfer(struct i2c_transaction *transaction) {
+void i2c_start_transaction(struct i2c_transaction *transaction) {
     struct i2c_master *master = transaction->master;
 
     dbg("%s: queueing transaction address=0x%02x, msgs=%p, num=%d\n", __func__, transaction->address, transaction->msgs, transaction->count);
@@ -383,7 +383,12 @@ void i2c_start_transfer(struct i2c_transaction *transaction) {
     }
 }
 
-void i2c_wait_transfer(struct i2c_transaction *transaction) {
+bool i2c_status_transaction(struct i2c_transaction *transaction) {
+    dbg("%s: transaction address=0x%02x, msgs=%p, num=%d, status: %s\n", __func__, transaction->address, transaction->msgs, transaction->count, (transaction->complete) ? "complete" : "incomplete");
+    return transaction->complete;
+}
+
+void i2c_wait_transaction(struct i2c_transaction *transaction) {
     dbg("%s: waiting on transaction address=0x%02x, msgs=%p, num=%d\n", __func__, transaction->address, transaction->msgs, transaction->count);
     while (!transaction->complete) {
         dbg("%s: waiting\n", __func__);
@@ -393,8 +398,8 @@ void i2c_wait_transfer(struct i2c_transaction *transaction) {
 }
 
 int i2c_transfer(struct i2c_transaction *transaction) {
-    i2c_start_transfer(transaction);
-    i2c_wait_transfer(transaction);
+    i2c_start_transaction(transaction);
+    i2c_wait_transaction(transaction);
     return transaction->error;
 }
 

@@ -66,11 +66,11 @@ void test_i2c(void) {
     debug_printf(STR_TAB "Press enter to start transfer...");
     uart_getc(); uart_putc('\n');
     do {
-        i2c_start_transfer(&transaction);
-        i2c_start_transfer(&transaction2);
-        i2c_start_transfer(&transaction3);
+        i2c_start_transaction(&transaction);
+        i2c_start_transaction(&transaction2);
+        i2c_start_transaction(&transaction3);
         /* All three transactions should be done by transaction 3 done */
-        i2c_wait_transfer(&transaction3);
+        i2c_wait_transaction(&transaction3);
         passert(transaction.complete == true);
         passert(transaction2.complete == true);
         passert(transaction3.complete == true);
