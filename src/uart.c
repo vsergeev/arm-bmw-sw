@@ -61,6 +61,12 @@ bool uart_poll(void) {
     return !!(LPC_UART->LSR & (1<<0));
 }
 
+void uart_flush(void) {
+    uint8_t dummy;
+    while (LPC_UART->LSR & (1<<0))
+        dummy = LPC_UART->RBR;
+}
+
 void uart_puts(const char *s) {
     while (*s != '\0')
         uart_putc(*s++);
