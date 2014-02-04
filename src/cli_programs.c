@@ -102,7 +102,7 @@ static void prog_time(int argc, char **argv) {
     debug_printf("system time: %d ms\n", time());
 }
 
-static struct spi_slave sf_spi = { .master = &SPI0, .speed = 24000000, .mode = 0, .cs_pin = 2, .cs_active_high = false };
+static const struct spi_slave sf_spi = { .master = &SPI0, .speed = 24000000, .mode = 0, .cs_pin = 2, .cs_active_high = false };
 static struct spi_flash sf = { .spi = NULL, .params = NULL };
 
 static void prog_sf(int argc, char **argv) {

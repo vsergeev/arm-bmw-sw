@@ -28,7 +28,7 @@ static const struct spi_flash_params spi_flash_supported[] = {
 
 /**********************************************************************/
 
-static void sf_cmd_rdid(struct spi_slave *slave, uint32_t *jedec_id) {
+static void sf_cmd_rdid(const struct spi_slave *slave, uint32_t *jedec_id) {
     uint8_t cmd[4] = {SF_CMD_RDID, 0xff, 0xff, 0xff};
     spi_select(slave);
     spi_transfer(slave, cmd, cmd, sizeof(cmd));
@@ -39,7 +39,7 @@ static void sf_cmd_rdid(struct spi_slave *slave, uint32_t *jedec_id) {
     *jedec_id |= cmd[3];
 }
 
-static void sf_cmd_wren(struct spi_slave *slave) {
+static void sf_cmd_wren(const struct spi_slave *slave) {
     uint8_t cmd[1] = {SF_CMD_WREN};
     spi_select(slave);
     spi_transfer(slave, cmd, NULL, sizeof(cmd));
@@ -47,7 +47,7 @@ static void sf_cmd_wren(struct spi_slave *slave) {
 }
 
 
-static void sf_cmd_rdsr(struct spi_slave *slave, uint8_t *sr) {
+static void sf_cmd_rdsr(const struct spi_slave *slave, uint8_t *sr) {
     uint8_t cmd[2] = {SF_CMD_RDSR, 0xff};
     spi_select(slave);
     spi_transfer(slave, cmd, cmd, sizeof(cmd));
@@ -56,7 +56,7 @@ static void sf_cmd_rdsr(struct spi_slave *slave, uint8_t *sr) {
     *sr = cmd[1];
 }
 
-static void sf_cmd_sector_erase(struct spi_slave *slave, uint32_t address) {
+static void sf_cmd_sector_erase(const struct spi_slave *slave, uint32_t address) {
     uint8_t cmd[4] = {SF_CMD_SE, 0xff, 0xff, 0xff};
     cmd[1] = (address >> 16) & 0xff;
     cmd[2] = (address >> 8) & 0xff;
@@ -66,14 +66,14 @@ static void sf_cmd_sector_erase(struct spi_slave *slave, uint32_t address) {
     spi_deselect(slave);
 }
 
-static void sf_cmd_chip_erase(struct spi_slave *slave) {
+static void sf_cmd_chip_erase(const struct spi_slave *slave) {
     uint8_t cmd[1] = {SF_CMD_CE};
     spi_select(slave);
     spi_transfer(slave, cmd, NULL, sizeof(cmd));
     spi_deselect(slave);
 }
 
-static void sf_cmd_read(struct spi_slave *slave, uint32_t address, uint8_t *buf, size_t len) {
+static void sf_cmd_read(const struct spi_slave *slave, uint32_t address, uint8_t *buf, size_t len) {
     uint8_t cmd[4] = {SF_CMD_READ, 0xff, 0xff, 0xff};
     cmd[1] = (address >> 16) & 0xff;
     cmd[2] = (address >> 8) & 0xff;
@@ -84,7 +84,7 @@ static void sf_cmd_read(struct spi_slave *slave, uint32_t address, uint8_t *buf,
     spi_deselect(slave);
 }
 
-static void sf_cmd_page_program(struct spi_slave *slave, uint32_t address, const uint8_t *buf, size_t len) {
+static void sf_cmd_page_program(const struct spi_slave *slave, uint32_t address, const uint8_t *buf, size_t len) {
     uint8_t cmd[4] = {SF_CMD_PP, 0xff, 0xff, 0xff};
     cmd[1] = (address >> 16) & 0xff;
     cmd[2] = (address >> 8) & 0xff;
@@ -97,14 +97,14 @@ static void sf_cmd_page_program(struct spi_slave *slave, uint32_t address, const
 
 /* Unused commands */
 #if 0
-static void sf_cmd_wrdi(struct spi_slave *slave) {
+static void sf_cmd_wrdi(const struct spi_slave *slave) {
     uint8_t cmd[1] = {SF_CMD_WRDI};
     spi_select(slave);
     spi_transfer(slave, cmd, NULL, sizeof(cmd));
     spi_deselect(slave);
 }
 
-static void sf_cmd_block_erase(struct spi_slave *slave, uint32_t address) {
+static void sf_cmd_block_erase(const struct spi_slave *slave, uint32_t address) {
     uint8_t cmd[4] = {SF_CMD_BE, 0xff, 0xff, 0xff};
     cmd[1] = (address >> 16) & 0xff;
     cmd[2] = (address >> 8) & 0xff;
@@ -117,7 +117,7 @@ static void sf_cmd_block_erase(struct spi_slave *slave, uint32_t address) {
 
 /**********************************************************************/
 
-static int sf_poll_wip(struct spi_slave *slave, uint32_t timeout) {
+static int sf_poll_wip(const struct spi_slave *slave, uint32_t timeout) {
     uint32_t tic;
     uint8_t sr;
 
@@ -143,7 +143,7 @@ static int sf_poll_wip(struct spi_slave *slave, uint32_t timeout) {
     return 0;
 }
 
-int spi_flash_probe(struct spi_flash *flash, struct spi_slave *spi) {
+int spi_flash_probe(struct spi_flash *flash, const struct spi_slave *spi) {
     uint32_t jedec_id;
     unsigned int i;
 

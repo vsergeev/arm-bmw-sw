@@ -23,11 +23,11 @@ struct spi_flash_params {
 #define SF_FLAG_CHIP_ERASE   (1<<0)
 
 struct spi_flash {
-    struct spi_slave *spi;
+    const struct spi_slave *spi;
     const struct spi_flash_params *params;
 };
 
-int spi_flash_probe(struct spi_flash *flash, struct spi_slave *spi);
+int spi_flash_probe(struct spi_flash *flash, const struct spi_slave *spi);
 int spi_flash_erase(struct spi_flash *flash, uint32_t address, size_t len);
 int spi_flash_read(struct spi_flash *flash, uint32_t address, uint8_t *buf, size_t len);
 int spi_flash_write(struct spi_flash *flash, uint32_t address, const uint8_t *buf, size_t len);

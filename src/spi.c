@@ -51,7 +51,7 @@ void spi_init(void) {
     LPC_SSP0->CR1 |= (1<<1);
 }
 
-void spi_setup(struct spi_slave *slave) {
+void spi_setup(const struct spi_slave *slave) {
     struct spi_master *master = slave->master;
     uint32_t cpsr;
 
@@ -82,7 +82,7 @@ void spi_setup(struct spi_slave *slave) {
     LPC_SSP0->CR1 |= (1<<1);
 }
 
-void spi_select(struct spi_slave *slave) {
+void spi_select(const struct spi_slave *slave) {
     uint32_t value = (slave->cs_active_high) ? 0xffff : 0x0;
 
     dbg("%s: select slave cs=%d, active high=%s\n", __func__, slave->cs_pin, (slave->cs_active_high) ? "true" : "false");
@@ -93,7 +93,7 @@ void spi_select(struct spi_slave *slave) {
         LPC_GPIO1->MASKED_ACCESS[(1 << (slave->cs_pin-12))] = value;
 }
 
-void spi_deselect(struct spi_slave *slave) {
+void spi_deselect(const struct spi_slave *slave) {
     uint32_t value = (slave->cs_active_high) ? 0x0 : 0xffff;
 
     dbg("%s: deselect slave cs=%d, active high=%s\n", __func__, slave->cs_pin, (slave->cs_active_high) ? "true" : "false");
@@ -104,7 +104,7 @@ void spi_deselect(struct spi_slave *slave) {
         LPC_GPIO1->MASKED_ACCESS[(1 << (slave->cs_pin-12))] = value;
 }
 
-void spi_transfer(struct spi_slave *slave, const uint8_t *txbuf, uint8_t *rxbuf, size_t len) {
+void spi_transfer(const struct spi_slave *slave, const uint8_t *txbuf, uint8_t *rxbuf, size_t len) {
     unsigned int txi, rxi;
     volatile uint8_t dummy;
 
