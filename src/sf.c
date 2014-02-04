@@ -136,7 +136,6 @@ static int sf_poll_wip(const struct spi_slave *slave, uint32_t timeout) {
             dbg("%s: wip clear polling timed out!\n", __func__);
             return SPI_FLASH_ERROR_TIMEOUT;
         }
-        delay_ms(10);
     }
     dbg("%s: operation took ~%d ms\n", __func__, time()-tic);
 
