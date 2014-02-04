@@ -1,27 +1,26 @@
-arm-bmw self-test version 634fae7
+arm-bmw self-test version 0011ba9
 
 arm-bmw > help
-
 Programs available
-	help            show this help
-	test            run a built-in test
-	led             manipulate LEDs
-	buttons         read buttons
-	time            read system time
-	sf              read spi flash
-
+    help            show this help
+    test            run a built-in test
+    led             turn on/off LEDs
+    buttons         read buttons
+    time            read system time
+    sf              probe, read spi flash
+    i2c             detect, read, write i2c devices
 arm-bmw > test
 Usage: test <test>
 Tests available
-	uart
-	spi
-	spi_flash
-	i2c
-	mcp23008
-	bmw_ui
+    uart
+    spi
+    spi_flash
+    i2c
+    mcp23008
+    bmw_ui
 arm-bmw > test uart
 
-Starting test test_uart() (tests/test_uart.c:10)
+Starting test test_uart() (src/tests/test_uart.c:10)
  [ OK ]  UART puts() works
          UART getc() works? (y/n/r) y
  [ OK ]  UART getc() works?
@@ -31,7 +30,7 @@ Starting test test_uart() (tests/test_uart.c:10)
  [ OK ]  All tests passed!
 arm-bmw > test spi
 
-Starting test test_spi() (tests/test_spi.c:32)
+Starting test test_spi() (src/tests/test_spi.c:32)
 
          Now testing transfer: SPI mode=0, speed=1e6, cs active low
          Press enter to start transfer...
@@ -80,7 +79,7 @@ Starting test test_spi() (tests/test_spi.c:32)
  [ OK ]  All tests passed!
 arm-bmw > test spi_flash
 
-Starting test test_spi_flash() (tests/test_spi_flash.c:28)
+Starting test test_spi_flash() (src/tests/test_spi_flash.c:28)
          Press enter to start SPI flash test...
 
          Probing for SPI flash chip...
@@ -144,7 +143,7 @@ Starting test test_spi_flash() (tests/test_spi_flash.c:28)
  [ OK ]  All tests passed!
 arm-bmw > test i2c
 
-Starting test test_i2c() (tests/test_i2c.c:14)
+Starting test test_i2c() (src/tests/test_i2c.c:14)
          Testing transfer to non-existent slave address
          Press enter to start transfer...
  [ OK ]  test_i2c():28  i2c_transfer(&transaction) == I2C_ERROR_TIMEOUT
@@ -187,7 +186,7 @@ Starting test test_i2c() (tests/test_i2c.c:14)
  [ OK ]  All tests passed!
 arm-bmw > test mcp23008
 
-Starting test test_mcp23008() (tests/test_mcp23008.c:14)
+Starting test test_mcp23008() (src/tests/test_mcp23008.c:14)
          Press enter to start MCP23008 test...
          Probing for MCP23008...
  [ OK ]  test_mcp23008():21  mcp23008_probe(&mcp, &I2C0, 0x20) == 0
@@ -228,7 +227,7 @@ Starting test test_mcp23008() (tests/test_mcp23008.c:14)
  [ OK ]  All tests passed!
 arm-bmw > test bmw_ui
 
-Starting test test_bmw_ui() (tests/test_bmw_ui.c:12)
+Starting test test_bmw_ui() (src/tests/test_bmw_ui.c:12)
          Initializing BMW UI
  [ OK ]  test_bmw_ui():15  bmw_ui_init() == 0
          Press enter to turn on LED1...
@@ -262,30 +261,17 @@ Starting test test_bmw_ui() (tests/test_bmw_ui.c:12)
          Waiting for negedge on switch 0
  [ OK ]  Negedge on switch 0
  [ OK ]  All tests passed!
-arm-bmw > 
 arm-bmw > time
-system time: 168818 ms
+system time: 141678 ms
 arm-bmw > time
-system time: 171211 ms
+system time: 144160 ms
 arm-bmw > led
 Usage: led <on/off> <LED number>
 arm-bmw > led on 1
 arm-bmw > led on 4
 arm-bmw > buttons
-BT0:  0
-BT1:  0
-SW0:  0
-SW1:  0
-arm-bmw > buttons
-BT0:  0
-BT1:  0
-SW0:  0
-SW1:  1
-arm-bmw > buttons
-BT0:  1
-BT1:  0
-SW0:  0
-SW1:  1
+Press 'q' to quit.
+BT0: 0  BT1: 0  SW0: 0  SW1: 1  
 arm-bmw > sf
 Usage: sf probe
 Usage: sf read [address=0] [length=256]
@@ -301,3 +287,4 @@ af 06 14 da 4d 5e 2c 8e  c3 28 97 ea 41 6a fd 4c  f9 f5 ea 8b 0d 5a 14 28  6f 76
 7c 73 29 71 4d 76 06 b7  da 81 83 0b b5 db f3 63  cc db 12 f6 46 f5 01 d7  ce ac c2 19 55 9d 8a 88 
 72 62 2a 02 b0 3f 99 f7  87 8f c1 d5 d1 02 11 5a  39 3d 67 45 27 93 12 bf  9b 6c a8 81 55 1c 46 88 
 arm-bmw > 
+
