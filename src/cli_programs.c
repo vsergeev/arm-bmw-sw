@@ -16,7 +16,7 @@
 #include "cli.h"
 
 static void prog_help(int argc, char **argv) {
-    debug_printf("\nPrograms available\n");
+    debug_printf("Programs available\n");
     debug_printf("\thelp            show this help\n");
     debug_printf("\ttest            run a built-in test\n");
     debug_printf("\tled             turn on/off LEDs\n");
@@ -24,7 +24,6 @@ static void prog_help(int argc, char **argv) {
     debug_printf("\ttime            read system time\n");
     debug_printf("\tsf              probe, read spi flash\n");
     debug_printf("\ti2c             detect, read, write i2c devices\n");
-    debug_printf("\n");
 }
 
 static void prog_test(int argc, char **argv) {
