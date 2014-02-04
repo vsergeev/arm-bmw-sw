@@ -223,7 +223,7 @@ void prog_i2c(int argc, char **argv) {
     }
 }
 
-struct cli_program cli_programs[] = {
+const struct cli_program cli_programs[] = {
     { .name = "help", .func = prog_help },
     { .name = "test", .func = prog_test },
     { .name = "led", .func = prog_led },
