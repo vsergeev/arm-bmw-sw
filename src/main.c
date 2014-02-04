@@ -28,6 +28,7 @@ int main(void) {
 
     /* Enable PIO0.2 for SPI Flash CS */
     LPC_GPIO0->DIR |= (1<<2);
+    LPC_GPIO0->DATA |= (1<<2);
 
     debug_printf("\n\narm-bmw self-test version " STR_VERSION "\n\n");
 
