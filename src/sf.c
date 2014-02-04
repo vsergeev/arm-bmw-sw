@@ -9,7 +9,7 @@
 
 /**********************************************************************/
 
-static struct spi_flash_params spi_flash_supported[] = {
+static const struct spi_flash_params spi_flash_supported[] = {
     { 0x014014, "S25FLK208K", 4096, 1048576, SF_FLAG_CHIP_ERASE },
 };
 
