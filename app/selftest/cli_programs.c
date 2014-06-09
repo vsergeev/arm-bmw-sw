@@ -10,6 +10,7 @@
 #include <test.h>
 #include <bmw_ui.h>
 #include <ucli.h>
+#include <urpc.h>
 
 #include "tests/tests.h"
 
@@ -22,6 +23,7 @@ static void prog_help(int argc, char **argv) {
     debug_printf("\ttime            read system time\n");
     debug_printf("\tsf              probe, read spi flash\n");
     debug_printf("\ti2c             detect, read, write i2c devices\n");
+    debug_printf("\trpc_server      run urpc server\n");
 }
 
 static void prog_test(int argc, char **argv) {
@@ -145,7 +147,7 @@ static void prog_sf(int argc, char **argv) {
     }
 }
 
-void prog_i2c(int argc, char **argv) {
+static void prog_i2c(int argc, char **argv) {
     uint8_t address, reg, data;
     int ret;
 
@@ -220,6 +222,10 @@ void prog_i2c(int argc, char **argv) {
     }
 }
 
+static void prog_rpc_server(int argc, char **argv) {
+    urpc_server();
+}
+
 const struct ucli_program CLI_Programs[] = {
     { .name = "help", .func = prog_help },
     { .name = "test", .func = prog_test },
@@ -228,6 +234,7 @@ const struct ucli_program CLI_Programs[] = {
     { .name = "time", .func = prog_time },
     { .name = "i2c", .func = prog_i2c },
     { .name = "sf", .func = prog_sf },
+    { .name = "rpc_server", .func = prog_rpc_server },
     { .name = NULL, .func = NULL },
 };
 

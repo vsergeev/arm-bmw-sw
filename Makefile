@@ -1,6 +1,6 @@
 ## Project Name
 PROJECT = arm-bmw-selftest
-APP_SRCS = selftest/main.c selftest/cli_programs.c
+APP_SRCS = selftest/main.c selftest/cli_programs.c selftest/rpc_handlers.c
 APP_SRCS += selftest/tests/test_uart.c selftest/tests/test_spi.c selftest/tests/test_spi_flash.c selftest/tests/test_i2c.c selftest/tests/test_mcp23008.c selftest/tests/test_bmw_ui.c
 
 ## BMW Lib Source files
@@ -11,7 +11,7 @@ BMW_SRCS += io/uart.c io/spi.c io/i2c.c io/i2c_reg.c io/queue.c
 # driver sources
 BMW_SRCS += driver/sf.c driver/mcp23008.c
 # high level sources
-BMW_SRCS += debug.c bmw_ui.c ucli.c
+BMW_SRCS += debug.c bmw_ui.c ucli.c urpc.c
 
 # Linker script
 LINKER_SCRIPT = lpc1114.dld

@@ -43,7 +43,7 @@ int main(void) {
         delay_ms(1000);
     }
     #else
-    cli();
+    ucli_server();
     #endif
 
     return 0;
