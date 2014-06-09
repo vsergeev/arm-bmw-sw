@@ -220,7 +220,7 @@ void prog_i2c(int argc, char **argv) {
     }
 }
 
-const struct cli_program cli_programs[] = {
+const struct ucli_program CLI_Programs[] = {
     { .name = "help", .func = prog_help },
     { .name = "test", .func = prog_test },
     { .name = "led", .func = prog_led },
