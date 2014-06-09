@@ -1,11 +1,8 @@
 #include <string.h>
 
-#include "debug.h"
-#include "uart.h"
+#include <io/uart.h>
 
-#include "cli.h"
-
-#define CLI_MAX_ARGC    5
+#include "ucli.h"
 
 extern struct cli_program cli_programs[];
 
@@ -23,8 +20,10 @@ static void cmd_dispatch(int argc, char **argv) {
     }
 
     if (cli_programs[i].name == NULL) {
-        debug_printf("unknown program \"%s\"\n", argv[0]);
-        debug_printf("please type \"help\" for help\n");
+        uart_puts("unknown program \"");
+        uart_puts(argv[0]);
+        uart_puts("\"\n");
+        uart_puts("please type \"help\" for help\n");
     }
 }
 
@@ -47,7 +46,6 @@ void cli(void) {
     int argc;
 
     while (1) {
-
         uart_puts("\x1b[1;36marm-bmw\x1b[0m > ");
         uart_gets(buf, sizeof(buf), true);
         argc = cmd_tokenize(buf, argv, CLI_MAX_ARGC);

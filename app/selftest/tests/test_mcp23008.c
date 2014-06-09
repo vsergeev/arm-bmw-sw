@@ -1,11 +1,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <tick.h>
-#include <uart.h>
+#include <system/tick.h>
+#include <io/uart.h>
+#include <io/i2c.h>
+#include <driver/mcp23008.h>
+
+#include <debug.h>
 #include <test.h>
-#include <i2c.h>
-#include <mcp23008.h>
 
 void test_mcp23008(void) {
     struct mcp23008 mcp;

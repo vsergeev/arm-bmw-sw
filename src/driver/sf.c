@@ -1,11 +1,13 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#include "sf.h"
-#include "spi.h"
-#include "tick.h"
+#include <system/tick.h>
+#include <io/spi.h>
 
-#include "debug.h"
+#include "sf.h"
+
+//#define DEBUG
+#include <debug.h>
 
 /**********************************************************************/
 

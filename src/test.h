@@ -1,7 +1,7 @@
 #ifndef _TEST_H
 #define _TEST_H
 
-#include "debug.h"
+#include <debug.h>
 
 #define STR_OKAY        " [\x1b[1;32m OK \x1b[0m]  "
 #define STR_FAIL        " [\x1b[1;31mFAIL\x1b[0m]  "

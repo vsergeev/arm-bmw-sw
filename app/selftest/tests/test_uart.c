@@ -1,8 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <io/uart.h>
+
+#include <debug.h>
 #include <test.h>
-#include <uart.h>
 
 void test_uart(void) {
     char buf[32];

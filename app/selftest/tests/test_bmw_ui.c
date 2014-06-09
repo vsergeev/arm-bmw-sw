@@ -1,11 +1,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <bmw_ui.h>
+#include <system/tick.h>
+#include <io/uart.h>
 
-#include <tick.h>
-#include <uart.h>
+#include <debug.h>
 #include <test.h>
+#include <bmw_ui.h>
 
 void test_bmw_ui(void) {
 

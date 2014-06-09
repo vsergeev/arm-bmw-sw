@@ -1,5 +1,6 @@
 #include <stdint.h>
-#include <lpc11xx/LPC11xx.h>
+
+#include <system/lpc11xx/LPC11xx.h>
 
 #include "tick.h"
 

@@ -1,5 +1,10 @@
+/* Test with
+ *  $ gcc -Wall -DQUEUE_TEST queue.c -o queue_test
+ */
+
 #include <stdlib.h>
 #include <stdbool.h>
+
 #include "queue.h"
 
 #ifndef QUEUE_TEST
@@ -122,6 +127,7 @@ void *queue_dequeue(struct queue *q) {
 
 /* Queue unit test */
 #ifdef QUEUE_TEST
+#include <stdio.h>
 #include <stdint.h>
 #include <assert.h>
 
@@ -191,6 +197,8 @@ int main(void) {
             }
         }
     }
+
+    printf("All tests passed!\n");
 
     return 0;
 }

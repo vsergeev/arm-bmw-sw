@@ -1,7 +1,9 @@
+*.a
 *.bin
 *.elf
 *.hex
 *.map
 *.o
 *.swp
+obj/
 .syntastic_c_config

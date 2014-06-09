@@ -1,7 +1,7 @@
 #include <stdint.h>
 
-#include <i2c.h>
-#include <i2c_reg.h>
+#include <io/i2c.h>
+#include <io/i2c_reg.h>
 
 #include "mcp23008.h"
 

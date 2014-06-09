@@ -5,8 +5,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#include <lpc11xx/LPC11xx.h>
-
 enum i2c_transfer_error {
     I2C_ERROR_TIMEOUT       = -1,
     I2C_ERROR_NACK          = -2,

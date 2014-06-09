@@ -5,8 +5,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#include <lpc11xx/LPC11xx.h>
-
 struct spi_slave {
     struct spi_master *master;
     unsigned int speed;

@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#include "spi.h"
+#include <io/spi.h>
 
 enum spi_flash_error {
     SPI_FLASH_ERROR_PROBE   = -1,

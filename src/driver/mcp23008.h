@@ -2,7 +2,8 @@
 #define _MCP23008_H
 
 #include <stdint.h>
-#include "i2c.h"
+
+#include <io/i2c.h>
 
 #define MCP_REG_IODIR   0x00
 #define MCP_REG_IPOL    0x01

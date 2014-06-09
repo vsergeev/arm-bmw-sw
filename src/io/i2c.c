@@ -2,14 +2,14 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#include <lpc11xx/LPC11xx.h>
+#include <system/lpc11xx/LPC11xx.h>
 
 #include "i2c.h"
 
 #include "queue.h"
 
 //#define DEBUG
-#include "debug.h"
+#include <debug.h>
 
 #define I2C_PCLK        48000000
 #define I2C_QUEUE_SIZE  5

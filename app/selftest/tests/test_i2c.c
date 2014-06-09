@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <uart.h>
+#include <io/uart.h>
+#include <io/i2c.h>
+
+#include <debug.h>
 #include <test.h>
-#include <i2c.h>
 
 void test_i2c(void) {
     uint8_t buf1[2], buf2[2], buf3[2], buf4[2];

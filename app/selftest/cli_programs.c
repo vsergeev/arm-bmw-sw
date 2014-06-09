@@ -1,19 +1,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "uart.h"
-#include "debug.h"
-
-#include "tick.h"
-#include "bmw_ui.h"
-#include "spi.h"
-#include "sf.h"
-#include "i2c_reg.h"
-#include "test.h"
+#include <system/tick.h>
+#include <io/spi.h>
+#include <io/i2c_reg.h>
+#include <io/uart.h>
+#include <driver/sf.h>
+#include <debug.h>
+#include <test.h>
+#include <bmw_ui.h>
+#include <ucli.h>
 
 #include "tests/tests.h"
-
-#include "cli.h"
 
 static void prog_help(int argc, char **argv) {
     debug_printf("Programs available\n");

@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-#include <i2c.h>
+#include "i2c.h"
 
 int i2c_detect(struct i2c_master *i2c, uint8_t address) {
     struct i2c_msg msg = { .buf = NULL, .len = 0, . read = false };

@@ -2,11 +2,12 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#include <lpc11xx/LPC11xx.h>
+#include <system/lpc11xx/LPC11xx.h>
 
 #include "spi.h"
 
-#include "debug.h"
+//#define DEBUG
+#include <debug.h>
 
 #define SPI_PCLK            48000000
 

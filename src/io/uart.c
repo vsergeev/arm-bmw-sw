@@ -1,8 +1,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include <system/lpc11xx/LPC11xx.h>
+
 #include "uart.h"
-#include <lpc11xx/LPC11xx.h>
 
 void uart_init(void) {
     /* Configure P1.6 for RXD and P1.7 for TXD function */

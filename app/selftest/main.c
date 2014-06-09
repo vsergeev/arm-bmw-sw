@@ -1,20 +1,20 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <lpc11xx/LPC11xx.h>
 
-#include "tick.h"
-#include "debug.h"
+#include <system/lpc11xx/LPC11xx.h>
+#include <system/tick.h>
 
-#include "uart.h"
-#include "spi.h"
-#include "i2c.h"
-#include "bmw_ui.h"
-#include "test.h"
+#include <io/uart.h>
+#include <io/spi.h>
+#include <io/i2c.h>
 
-#include "cli.h"
+#include <debug.h>
+#include <test.h>
+#include <bmw_ui.h>
+#include <ucli.h>
 
-#include <tests/tests.h>
+#include "tests/tests.h"
 
 int main(void) {
     SystemInit();

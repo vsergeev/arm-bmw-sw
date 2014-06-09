@@ -1,24 +1,36 @@
-# Project Name
+## Project Name
 PROJECT = arm-bmw-selftest
-# Source files
-TESTS = tests/test_uart.c tests/test_spi.c tests/test_spi_flash.c tests/test_i2c.c tests/test_mcp23008.c tests/test_bmw_ui.c
-SRCS = lpc11xx/system_LPC11xx.c startup.c tick.c uart.c debug.c spi.c sf.c queue.c i2c.c i2c_reg.c mcp23008.c bmw_ui.c cli.c cli_programs.c $(TESTS) main.c
+APP_SRCS = selftest/main.c selftest/cli_programs.c
+APP_SRCS += selftest/tests/test_uart.c selftest/tests/test_spi.c selftest/tests/test_spi_flash.c selftest/tests/test_i2c.c selftest/tests/test_mcp23008.c selftest/tests/test_bmw_ui.c
+
+## BMW Lib Source files
+# system sources
+BMW_SRCS = system/lpc11xx/system_LPC11xx.c system/startup.c system/tick.c
+# peripheral io sources
+BMW_SRCS += io/uart.c io/spi.c io/i2c.c io/i2c_reg.c io/queue.c
+# driver sources
+BMW_SRCS += driver/sf.c driver/mcp23008.c
+# high level sources
+BMW_SRCS += debug.c bmw_ui.c ucli.c
+
 # Linker script
 LINKER_SCRIPT = lpc1114.dld
 
 #########################################################################
 
 SRCDIR = src
+APPDIR = app
 OBJDIR = obj
 
-SOURCES = $(patsubst %,$(SRCDIR)/%,$(SRCS))
-OBJECTS = $(patsubst %.c,$(OBJDIR)/%.o,$(SRCS))
+BMW_OBJECTS = $(patsubst %.c,$(OBJDIR)/$(SRCDIR)/%.o,$(BMW_SRCS))
+APP_OBJECTS = $(patsubst %.c,$(OBJDIR)/$(APPDIR)/%.o,$(APP_SRCS))
+BMW_LIB = libbmw.a
 
 #########################################################################
 
 OPT = -Os
-DEBUG = 
-INCLUDES = -Isrc/cmsis/ -Isrc/
+DEBUG =
+INCLUDES = -Isrc/system/cmsis/ -Isrc/
 GIT_VERSION = $(shell git describe --abbrev --always --dirty)
 
 #########################################################################
@@ -28,14 +40,17 @@ CFLAGS = -DGIT_VERSION=\"$(GIT_VERSION)\"
 CFLAGS += -fno-common -mcpu=cortex-m0 -mthumb
 CFLAGS += $(OPT) $(DEBUG) $(INCLUDES)
 CFLAGS += -Wall -Wextra
-CFLAGS += -Wcast-align -Wcast-qual -Wimplicit -Wpointer-arith -Wswitch -Wredundant-decls -Wreturn-type -Wshadow -Wunused
+CFLAGS += -Wcast-align -Wcast-qual -Wimplicit -Wpointer-arith -Wswitch -Wredundant-decls -Wreturn-type -Wshadow -Wunused -Wno-unused-parameter
+
 # Linker options
-LDFLAGS = -mcpu=cortex-m0 -mthumb $(OPT) -nostartfiles -Wl,-Map=$(PROJECT).map -T$(LINKER_SCRIPT)
+LDFLAGS = -mcpu=cortex-m0 -mthumb $(OPT) -nostartfiles -Wl,-Map=$(OBJDIR)/$(PROJECT).map -T$(LINKER_SCRIPT)
+
 # Assembler options
 ASFLAGS = -ahls -mcpu=cortex-m0 -mthumb
 
 # Compiler/Assembler/Linker Paths
 CROSS = arm-none-eabi-
+AR = $(CROSS)ar
 CC = $(CROSS)gcc
 AS = $(CROSS)as
 LD = $(CROSS)ld
@@ -66,8 +81,8 @@ $(PROJECT).bin: $(PROJECT).elf
 $(PROJECT).hex: $(PROJECT).elf
 	$(OBJCOPY) -R .stack -R .bss -O ihex $(PROJECT).elf $(PROJECT).hex
 
-$(PROJECT).elf: $(OBJECTS) $(LINKER_SCRIPT)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $(PROJECT).elf
+$(PROJECT).elf: $(BMW_LIB) $(APP_OBJECTS) $(LINKER_SCRIPT)
+	$(CC) $(LDFLAGS) $(APP_OBJECTS) -o $(PROJECT).elf $(BMW_LIB)
 
 stats: $(PROJECT).elf
 	$(OBJDUMP) -th $(PROJECT).elf
@@ -75,21 +90,17 @@ stats: $(PROJECT).elf
 
 clean:
 	$(REMOVE) -r $(OBJDIR)
+	$(REMOVE) $(BMW_LIB)
 	$(REMOVE) $(PROJECT).elf
 	$(REMOVE) $(PROJECT).hex
 	$(REMOVE) $(PROJECT).bin
-	$(REMOVE) $(PROJECT).map
 
 #########################################################################
 
-$(OBJECTS): | $(OBJDIR)
+$(BMW_LIB): $(BMW_OBJECTS)
+	$(AR) rcs $@ $(BMW_OBJECTS)
 
-$(OBJDIR):
-	mkdir $(OBJDIR)
-	mkdir $(OBJDIR)/lpc11xx
-	mkdir $(OBJDIR)/core
-	mkdir $(OBJDIR)/tests
-
-$(OBJDIR)/%.o : $(SRCDIR)/%.c
+$(OBJDIR)/%.o : %.c
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $< -o $@
 

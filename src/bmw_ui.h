@@ -2,6 +2,7 @@
 #define _BMW_UI_H
 
 #include <stdint.h>
+#include <driver/mcp23008.h>
 
 #define BMW_SW0     (1<<0)
 #define BMW_SW1     (1<<1)
@@ -11,6 +12,8 @@
 #define BMW_LED2    (1<<5)
 #define BMW_LED3    (1<<6)
 #define BMW_LED4    (1<<7)
+
+extern struct mcp23008 bmx_iox;
 
 int bmw_ui_init(void);
 

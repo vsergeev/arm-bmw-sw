@@ -2,8 +2,9 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include <io/uart.h>
+
 #include "debug.h"
-#include "uart.h"
 
 /* Basic printf. Supports conversions 'bxXducs%', space padding, zero padding. */
 

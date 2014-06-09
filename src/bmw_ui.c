@@ -1,11 +1,9 @@
 #include <stdint.h>
 
+#include <io/i2c.h>
+#include <driver/mcp23008.h>
+
 #include "bmw_ui.h"
-
-#include "i2c.h"
-#include "mcp23008.h"
-
-#include "debug.h"
 
 #define GPIO_MASK_LED       0xF0
 #define GPIO_MASK_BUTTON    0x0F

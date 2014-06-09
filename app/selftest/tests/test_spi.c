@@ -1,9 +1,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <uart.h>
+#include <system/lpc11xx/LPC11xx.h>
+#include <io/uart.h>
+#include <io/spi.h>
+
+#include <debug.h>
 #include <test.h>
-#include <spi.h>
 
 static void _test_spi_transfer(struct spi_slave *spi, const char *prompt) {
     uint8_t buf[4] = {0xaa, 0x55, 0xf0, 0x0f};
