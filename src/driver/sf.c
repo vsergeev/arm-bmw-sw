@@ -12,7 +12,8 @@
 /**********************************************************************/
 
 static const struct spi_flash_params spi_flash_supported[] = {
-    { 0x014014, "S25FLK208K", 4096, 1048576, SF_FLAG_CHIP_ERASE },
+    { .jedec_id = 0x014014, .name = "S25FLK208K", .sector_size = 4096, .capacity = 1048576, .flags = SF_FLAG_CHIP_ERASE },
+    { .jedec_id = 0x014015, .name = "S25FL216K", .sector_size = 4096, .capacity = 2097152, .flags = SF_FLAG_CHIP_ERASE },
 };
 
 /**********************************************************************/
