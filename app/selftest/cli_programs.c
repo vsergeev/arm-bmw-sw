@@ -3,6 +3,7 @@
 
 #include <system/tick.h>
 #include <io/spi.h>
+#include <io/adc.h>
 #include <io/i2c_reg.h>
 #include <io/uart.h>
 #include <driver/sf.h>
@@ -19,6 +20,7 @@ static void prog_help(int argc, char **argv) {
     debug_printf("\thelp            show this help\n");
     debug_printf("\ttest            run a built-in test\n");
     debug_printf("\tled             turn on/off LEDs\n");
+    debug_printf("\tadc             read ADC channels\n");
     debug_printf("\tbuttons         read buttons\n");
     debug_printf("\ttime            read system time\n");
     debug_printf("\tsf              probe, read spi flash\n");
@@ -91,6 +93,27 @@ static void prog_buttons(int argc, char **argv) {
 
         debug_printf("\rBT0: %b  BT1: %b  SW0: %b  SW1: %b  ", !!(state & BMW_BT0), !!(state & BMW_BT1), !!(state & BMW_SW0), !!(state & BMW_SW1));
         delay_ms(50);
+        if (uart_poll())
+            c = uart_getc();
+    } while (c != 'q');
+    debug_printf("\n");
+}
+
+static void prog_adc(int argc, char **argv) {
+    unsigned int i;
+    uint8_t c = 0;
+    uint16_t uval[5];
+
+    /* Initialize all five channels */
+    adc_init(0x1f);
+
+    debug_printf("Press 'q' to quit.\n");
+    do {
+        for (i = 0; i < 5; i++)
+            uval[i] = adc_read(i);
+
+        debug_printf("\r%05u %05u %05u %05u %05u", uval[0], uval[1], uval[2], uval[3], uval[4]);
+
         if (uart_poll())
             c = uart_getc();
     } while (c != 'q');
@@ -231,6 +254,7 @@ const struct ucli_program CLI_Programs[] = {
     { .name = "test", .func = prog_test },
     { .name = "led", .func = prog_led },
     { .name = "buttons", .func = prog_buttons },
+    { .name = "adc", .func = prog_adc },
     { .name = "time", .func = prog_time },
     { .name = "i2c", .func = prog_i2c },
     { .name = "sf", .func = prog_sf },

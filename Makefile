@@ -17,7 +17,7 @@ OBJDIR = obj
 # system sources
 BMW_SRCS = system/lpc11xx/system_LPC11xx.c system/startup.c system/tick.c
 # peripheral io sources
-BMW_SRCS += io/uart.c io/spi.c io/i2c.c io/i2c_reg.c io/queue.c
+BMW_SRCS += io/uart.c io/spi.c io/i2c.c io/adc.c io/i2c_reg.c io/queue.c
 # driver sources
 BMW_SRCS += driver/sf.c driver/mcp23008.c
 # high level sources
