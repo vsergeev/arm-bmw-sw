@@ -70,6 +70,7 @@ AS = $(CROSS)as
 LD = $(CROSS)ld
 OBJDUMP = $(CROSS)objdump
 OBJCOPY = $(CROSS)objcopy
+GDB = $(CROSS)gdb
 SIZE = $(CROSS)size
 REMOVE = rm -f
 
@@ -88,7 +89,7 @@ debug: $(PROJECT).elf
 	openocd -s openocd -f openocd/debug.cfg
 
 gdb: $(PROJECT).elf
-	$(CROSS)gdb
+	$(GDB) $(PROJECT).elf
 
 flashisp: $(PROJECT).hex
 	lpc21isp -verify $(PROJECT).hex /dev/ttyUSB1 115200 12000000
