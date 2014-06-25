@@ -82,7 +82,7 @@ all:
 	$(MAKE) $(PROJECT).bin
 
 flash: $(PROJECT).elf
-	openocd -s openocd -f openocd/flash.cfg
+	openocd -s openocd -c "set PROGFILE $(PROJECT).elf" -f openocd/flash.cfg
 
 debug: $(PROJECT).elf
 	openocd -s openocd -f openocd/debug.cfg
