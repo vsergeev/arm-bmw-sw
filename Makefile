@@ -113,7 +113,7 @@ $(PROJECT).hex: $(PROJECT).elf
 	$(OBJCOPY) -R .stack -R .bss -O ihex $(PROJECT).elf $(PROJECT).hex
 
 $(PROJECT).elf: $(BMW_LIB) $(APP_OBJECTS) $(LINKER_SCRIPT)
-	$(CC) $(LDFLAGS) $(APP_OBJECTS) -o $(PROJECT).elf $(BMW_LIB)
+	$(CC) $(LDFLAGS) $(APP_OBJECTS) -o $(PROJECT).elf -Wl,--whole-archive $(BMW_LIB) -Wl,--no-whole-archive
 
 $(BMW_LIB): $(BMW_OBJECTS)
 	$(AR) rcs $@ $(BMW_OBJECTS)
