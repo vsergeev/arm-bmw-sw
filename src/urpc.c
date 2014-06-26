@@ -66,7 +66,7 @@ static int rpc_read_request(uint8_t *method, uint16_t *len, uint8_t *buf) {
     *len = uart_getc();
     *len |= uart_getc() << 8;
 
-    dbg("%s: found rpc request with checksum 0x%04x, method 0x%02x, retcode %d, length %u\n", __func__, rpc_checksum, *method, rpc_retcode, *len);
+    dbg("%s: found rpc request with checksum 0x%04x, method 0x%02x, retcode %d, length %u\n", __func__, rpc_checksum, *method, retcode, *len);
 
     /* Validate length */
     if (*len > URPC_BUFFER_SIZE) {
