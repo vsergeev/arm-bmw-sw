@@ -18,6 +18,7 @@
 static void prog_help(int argc, char **argv) {
     debug_printf("Programs available\n");
     debug_printf("\thelp            show this help\n");
+    debug_printf("\tversion         print firmware version\n");
     debug_printf("\ttest            run a built-in test\n");
     debug_printf("\tled             turn on/off LEDs\n");
     debug_printf("\tadc             read ADC channels\n");
@@ -26,6 +27,10 @@ static void prog_help(int argc, char **argv) {
     debug_printf("\tsf              probe, read spi flash\n");
     debug_printf("\ti2c             detect, read, write i2c devices\n");
     debug_printf("\trpc_server      run urpc server\n");
+}
+
+static void prog_version(int argc, char **argv) {
+    debug_printf(GIT_VERSION "\n");
 }
 
 static void prog_test(int argc, char **argv) {
@@ -251,6 +256,7 @@ static void prog_rpc_server(int argc, char **argv) {
 
 const struct ucli_program CLI_Programs[] = {
     { .name = "help", .func = prog_help },
+    { .name = "version", .func = prog_version },
     { .name = "test", .func = prog_test },
     { .name = "led", .func = prog_led },
     { .name = "buttons", .func = prog_buttons },
