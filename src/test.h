@@ -7,10 +7,8 @@
 #define STR_FAIL        " [\x1b[1;31mFAIL\x1b[0m]  "
 #define STR_TAB         "         "
 
-#ifdef GIT_VERSION
-#define STR_VERSION     "\x1b[1;33m" GIT_VERSION "\x1b[0m"
-#else
-#define STR_VERSION     "\x1b[1;33munknown\x1b[0m"
+#ifndef GIT_VERSION
+#define GIT_VERSION     "unknown"
 #endif
 
 #define passert(c) \

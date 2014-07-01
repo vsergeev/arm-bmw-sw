@@ -6,8 +6,8 @@
 #include <urpc.h>
 
 static int8_t version(uint8_t *buf, uint16_t *len) {
-    memcpy(buf, STR_VERSION, strlen(STR_VERSION));
-    *len = strlen(STR_VERSION);
+    memcpy(buf, GIT_VERSION, strlen(GIT_VERSION));
+    *len = strlen(GIT_VERSION);
     return 0;
 }
 

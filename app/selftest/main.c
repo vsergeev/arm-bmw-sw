@@ -30,7 +30,7 @@ int main(void) {
     LPC_GPIO0->DIR |= (1<<2);
     LPC_GPIO0->DATA |= (1<<2);
 
-    debug_printf("\n\narm-bmw self-test version " STR_VERSION "\n\n");
+    debug_printf("\n\narm-bmw self-test version " "\x1b[1;33m" GIT_VERSION "\x1b[0m" "\n\n");
 
     #ifdef NO_CLI
     while (1) {
