@@ -95,7 +95,5 @@ void test_mcp23008(void) {
 
         delay_ms(25);
     }
-
-    pokay("All tests passed!");
 }
 

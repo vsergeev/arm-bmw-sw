@@ -89,7 +89,5 @@ void test_bmw_ui(void) {
         delay_ms(1);
     } while ((bmw_ui_button_negedge() & BMW_SW0) == 0);
     pokay("Negedge on switch 0");
-
-    pokay("All tests passed!");
 }
 

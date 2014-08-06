@@ -98,7 +98,5 @@ void test_spi(void) {
             debug_printf("%02x ", rxbuf[i]);
         debug_printf("\n");
     }
-
-    pokay("All tests passed!");
 }
 

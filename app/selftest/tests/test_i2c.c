@@ -172,7 +172,5 @@ void test_i2c(void) {
     transaction.count = 2;
     passert(i2c_transfer(&transaction) == 0);
     passert(buf2[0] == 0xbb);
-
-    pokay("All tests passed!");
 }
 
