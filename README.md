@@ -2,9 +2,9 @@
 
 A lightweight software library and selftest application for the [arm-bmw](http://theanine.io/projects/arm-bmw/) development board.
 
-## Selftest Application
+## Self-test Application
 
-The selftest application provides a basic CLI over the UART with hardware unit tests and utility programs. The UART is configured for 115200 8N1, and the CLI may be accessed with your favorite serial port program.
+The self-test application provides a basic CLI over the UART with hardware unit tests and utility programs. The UART is configured for 115200 8N1, and the CLI may be accessed with your favorite serial port program.
 
 The hardware unit tests include UART, SPI, I2C, SPI Flash, I/O Expander, and UI tests. These tests combine loopbacks and interactive verification to verify the correct operation of the hardware. See the tests in the [apps/selftest/tests](app/selftest/tests) folder for more information.
 
@@ -23,7 +23,7 @@ A passing test log can be found in [arm-bmw-selftest.log](arm-bmw-selftest.log).
    * `system/` Startup files
      * `cmsis/` CMSIS header files
      * `lpc11xx/` LPC11xx header files
-     * `startup.c` Interrupt vector table and Reset handler
+     * `startup.c` Interrupt vector table and reset handler
      * `tick.c`, `tick.h` SysTick handler and `delay_ms()` helper
    * `io/` peripheral I/O drivers
      * `uart.c`, `uart.h` Polling UART driver
@@ -43,11 +43,11 @@ A passing test log can be found in [arm-bmw-selftest.log](arm-bmw-selftest.log).
  * `pybmw/` Python µRPC client
    * `urpc.py` µRPC client
  * `app/` Applications sources
-   * `selftest` Selftest application
-    * `main.c` Selftest main
-    * `cli_programs.c` Selftest CLI handlers
-    * `rpc_handlers.c` Selftest RPC handlers
-    * `tests/` Selftest tests
+   * `selftest` Self-test application
+    * `main.c` Self-test main
+    * `cli_programs.c` Self-test CLI handlers
+    * `rpc_handlers.c` Self-test RPC handlers
+    * `tests/` Self-test tests
       * `tests.h` Test prototypes
       * `test_uart.c` UART test
       * `test_spi.c` SPI test
@@ -66,9 +66,9 @@ For example, to build the `selftest` application, run:
 ``` shell
 make APP=selftest all
 ```
-This will produce the program files `arm-bmw-selftest.elf/hex/bin` and the memory map `obj/arm-bmw-selftest.map`, among other build products.
+This will produce the program files `arm-bmw-selftest.elf,hex,bin` and the memory map `obj/arm-bmw-selftest.map`, among other build products.
 
-Available Makefile targets:
+The available Makefile targets are:
 
  * `make APP=<app> all` Build the static library, and with it, the application
  * `make APP=<app> clean` Clean the build products and build directory
@@ -76,7 +76,7 @@ Available Makefile targets:
  * `make APP=<app> flash` Flash the program file over JTAG with OpenOCD
  * `make APP=<app> flashisp` Flash the program file over UART with lpc21isp
  * `make APP=<app> debug` Flash the program file over JTAG with OpenOCD and halt the target for debugging
- * `make APP=<app> gdb` Launch gdb to connect to OpenOCD's gdbserver for debugging
+ * `make APP=<app> gdb` Launch gdb and connect to OpenOCD's gdbserver for debugging
 
 ### Flashing over JTAG with OpenOCD
 
@@ -92,13 +92,13 @@ Flashing with OpenOCD requires an SWD-capable JTAG dongle, like the [ST-LINK/V2]
 make APP=selftest flashisp
 ```
 
-Flashing with lpc21isp requires a serial port cable connected to the arm-bmw UART header. Be sure to reset the arm-bmw with the bootloader header jumpered before flashing, to start the microcontroller into its on-chip ROM bootloader.
+Flashing with lpc21isp requires a serial port cable connected to the arm-bmw UART header. Be sure to reset the arm-bmw board with the bootloader header jumpered before flashing, to start the microcontroller into its on-chip ROM bootloader.
 
-The `LPC21ISP_SERIAL_PATH` variable may need to be updated with the correct serial port device path in the Makefile.
+Note: the `LPC21ISP_SERIAL_PATH` variable may need to be updated with the correct serial port device path in the Makefile.
 
 ### Debugging with GDB
 
-The `debug` target uses OpenOCD to flash the program, halt the target, and launch OpenOCD's gdbserver.
+The `debug` target uses OpenOCD to flash the program, halt the target, and launch OpenOCD's gdbserver. Debugging the arm-bmw with OpenOCD requires an SWD-capable JTAG dongle, like the [ST-LINK/V2](http://www.st.com/web/catalog/tools/FM146/CL1984/SC724/SS1677/PF251168?sc=internet/evalboard/product/251168.jsp).
 ``` shell
 make APP=selftest debug
 ```
