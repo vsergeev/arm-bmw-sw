@@ -1,36 +1,42 @@
-arm-bmw self-test version 0011ba9
+
+
+arm-bmw self-test version 0ed8933
 
 arm-bmw > help
 Programs available
-    help            show this help
-    test            run a built-in test
-    led             turn on/off LEDs
-    buttons         read buttons
-    time            read system time
-    sf              probe, read spi flash
-    i2c             detect, read, write i2c devices
+	help            show this help
+	version         print firmware version
+	test            run a built-in test
+	led             turn on/off LEDs
+	adc             read ADC channels
+	buttons         read buttons
+	time            read system time
+	sf              probe, read spi flash
+	i2c             detect, read, write i2c devices
+	rpc_server      run urpc server
+arm-bmw > version
+0ed8933
 arm-bmw > test
 Usage: test <test>
 Tests available
-    uart
-    spi
-    spi_flash
-    i2c
-    mcp23008
-    bmw_ui
+	uart
+	spi
+	spi_flash
+	i2c
+	mcp23008
+	bmw_ui
 arm-bmw > test uart
 
-Starting test test_uart() (src/tests/test_uart.c:10)
+Starting test test_uart() (app/selftest/tests/test_uart.c:12)
  [ OK ]  UART puts() works
          UART getc() works? (y/n/r) y
  [ OK ]  UART getc() works?
          enter the string banana: banana
  [ OK ]  UART gets() works, got banana
  [ OK ]  fancy printf 0xcafe 0xCAFE 0b01010101 -1 4294967295 "test"
- [ OK ]  All tests passed!
 arm-bmw > test spi
 
-Starting test test_spi() (src/tests/test_spi.c:32)
+Starting test test_spi() (app/selftest/tests/test_spi.c:35)
 
          Now testing transfer: SPI mode=0, speed=1e6, cs active low
          Press enter to start transfer...
@@ -76,63 +82,62 @@ Starting test test_spi() (src/tests/test_spi.c:32)
 71 7d 34 ca c9 03 aa 37 48 d8 9f 66 6d 99 77 21 ab 3c ea a9 3c a9 28 18 e9 86 b3 a7 a9 48 6b f1 9d 42 d9 bb 03 0d 7c 67 df a5 66 d2 d9 37 fe b1 53 31 30 6a 74 95 6f 4a 99 b1 b2 3c 34 d8 00 bd 57 17 2c 2e 59 a8 5b 05 c4 6c fc 0a a4 99 97 c3 7b df d0 27 d6 df 66 6e fe ab 1b e5 e7 60 3b 31 2b 4e f5 b8 94 84 f6 1b 8e 53 44 2f 86 d9 57 e2 4e ae db 17 3f 74 45 4b 29 65 ef b9 95 a5 9d 07 af 06 14 da 4d 5e 2c 8e c3 28 97 ea 41 6a fd 4c f9 f5 ea 8b 0d 5a 14 28 6f 76 79 6e 2a b5 54 37 34 2a 25 26 0a de 15 2b 47 1b 2d 5b 84 bd b9 c5 dd 75 47 a2 b1 11 3c 5a 64 59 38 cd 08 07 84 43 7c 73 29 71 4d 76 06 b7 da 81 83 0b b5 db f3 63 cc db 12 f6 46 f5 01 d7 ce ac c2 19 55 9d 8a 88 72 62 2a 02 b0 3f 99 f7 87 8f c1 d5 d1 02 11 5a 39 3d 67 45 27 93 12 bf 9b 6c a8 81 55 1c 46 88 e0 40 df be f5 d6 b1 c9 1d 1a 1f d7 3a 46 3b cf 70 97 86 27 84 0f 0a e8 db 33 63 8e c0 ec 5c 3a 23 1b 57 58 20 3b 81 25 a7 52 4c 61 92 2d 24 a0 cf 47 f3 b3 fc 7f f5 76 ae 78 33 8f 18 59 7d 59 e5 c3 9b 7c 8e b1 93 37 dc 84 d3 dd 91 4e cd 36 f7 91 a5 37 2d 48 db 5d 43 cc 08 0a ff ad ac b1 cd cd 55 ff 06 99 cc 63 9c d4 83 c6 d8 ee 4d 54 04 16 24 dc 4f 7f 41 f7 c7 18 68 26 8b 50 87 6b 3a 89 75 0e d5 51 73 5b 62 fd d4 8f c8 a0 97 e1 c5 59 b2 5c c8 42 b0 8f 60 d8 54 1e 9e e6 86 61 f7 08 da 5a de 12 37 28 ba 10 49 91 5a e1 3f b7 ef 36 75 ab bf 1d 3f ef 1f 60 30 a8 3c 6b 4a 64 f2 13 f7 45 b6 ce 34 38 b8 31 df 00 f2 b4 3f 74 54 66 93 a8 ba 61 14 f0 f8 14 a7 6d e1 55 db 90 ef 30 75 15 b6 0f fc 70 6f 53 6a d0 38 47 c2 46 1c f7 65 c8 2a 87 ea 05 b9 a6 91 6c d5 af f3 97 43 9a df 1d 10 d3 9a 36 65 fa ff ab ec 8a e2 b7 f4 d1 90 c7 0b 8a 9d ca fd 5a db 6f 85 35 42 11 87 41 43 ed ea 6c 98 82 09 f5 5b d7 bc d0 76 7f 4c 2e 36 54 71 4a a9 95 27 3d 6a 7a d6 79 b5 c8 4c c9 dd 7e 6f 5c 06 e8 2b 20 46 2b 1c 6c d3 4f 88 1b 13 c1 24 e5 b5 ff 50 65 04 31 80 f8 bb 08 d5 89 b6 65 e9 36 81 ab 70 1d fe fb 18 51 92 a0 37 f7 ab af 33 16 14 75 47 33 34 51 5b 40 8a ea cc 86 53 fb d4 79 38 c7 c9 18 95 03 2f ae 5b 81 48 ed 6b bd 8e 98 50 c7 7d 8b 32 12 c0 0a 6a a8 f6 70 53 8f f4 6e f1 00 e9 7f 5f 58 27 8d a3 66 45 74 cd 34 94 7e af b3 04 17 c5 a1 d7 57 f4 e2 ea a7 19 93 6d 08 11 f2 bb c5 54 55 df 6f 7b f4 82 d0 86 b9 b2 91 b5 74 7d 81 2f 85 ee 92 5d f5 c9 32 71 ca d8 c3 9e 1e d7 1d 76 8b 2c ed 4d d0 58 8c a5 f8 f4 b3 af 52 15 b4 0c 11 d4 a9 ba 43 f1 bd 36 73 5b 7d 4d f4 fa 38 38 aa aa 55 aa 6c 58 f9 ba 52 9b 3a 36 2d 77 19 40 d2 29 30 46 83 b4 9e f8 7c b8 59 7e e8 79 06 e4 76 93 47 0a d8 82 ac ff 8d b6 4d b7 0f c0 d3 d4 f9 b8 7a aa 0f 0f cc a5 af 6e 9b 4a 7c bb 70 00 ae 98 53 97 8e 7f fe 7b 7f b5 43 f7 b4 7c 03 e4 d1 cb bd 3f 33 60 de 27 dd c5 84 84 4d ac 19 b6 ff b3 99 ed 3e ce 87 2a c1 ff 01 99 1e 95 fc 81 26 80 2a 59 79 1a 0d 14 0c ea 36 c3 23 32 1a 36 f0 fd 63 e6 9f 04 9d 22 55 8b 5a a7 20 4c 8c 97 b4 24 0e 88 f9 7d 2e 4c ab 01 8b 63 ff a7 c0 22 d0 88 ca 5c 3c f9 d5 b9 5d 73 68 15 ec 31 33 d4 97 82 f0 e3 a4 4a b1 a4 b7 40 f7 92 29 4c 4e ee a4 31 4b f3 43 06 7a ab c2 8a f1 48 a2 15 61 8e ba 3f af 4a 96 7c a1 89 f3 00 66 4e 3b c0 b5 4a 16 79 6c d8 50 35 14 40 e6 f6 be 9b dc 01 ba a7 41 2d 9f ac 62 
          Please tie MISO and MOSI for loopback test and press enter...
  [ OK ]  SPI mode=0, speed=1e6 loopback success!
- [ OK ]  All tests passed!
 arm-bmw > test spi_flash
 
-Starting test test_spi_flash() (src/tests/test_spi_flash.c:28)
+Starting test test_spi_flash() (app/selftest/tests/test_spi_flash.c:31)
          Press enter to start SPI flash test...
 
          Probing for SPI flash chip...
- [ OK ]  test_spi_flash():45  spi_flash_probe(&flash, &spi) == 0
+ [ OK ]  test_spi_flash():48  spi_flash_probe(&flash, &spi) == 0
  [ OK ]  Found SPI flash!
- [ OK ]    JEDEC ID: 0x00014014
- [ OK ]    Name: S25FLK208K
+ [ OK ]    JEDEC ID: 0x00014015
+ [ OK ]    Name: S25FL216K
  [ OK ]    Sector Size: 4096
- [ OK ]    Capacity: 1048576
+ [ OK ]    Capacity: 2097152
  [ OK ]    Flags: 0001
          Testing invalid argument checks of SPI flash functions
- [ OK ]  test_spi_flash():55  spi_flash_erase(&flash, 0x5, 4096) == SPI_FLASH_ERROR_ARGS
- [ OK ]  test_spi_flash():56  spi_flash_erase(&flash, 0, 4095) == SPI_FLASH_ERROR_ARGS
- [ OK ]  test_spi_flash():58  spi_flash_write(&flash, 0x3, NULL, flash.params->capacity) == SPI_FLASH_ERROR_ARGS
+ [ OK ]  test_spi_flash():58  spi_flash_erase(&flash, 0x5, 4096) == SPI_FLASH_ERROR_ARGS
+ [ OK ]  test_spi_flash():59  spi_flash_erase(&flash, 0, 4095) == SPI_FLASH_ERROR_ARGS
+ [ OK ]  test_spi_flash():61  spi_flash_write(&flash, 0x3, NULL, flash.params->capacity) == SPI_FLASH_ERROR_ARGS
          Erasing lower two sectors...
- [ OK ]  test_spi_flash():62  spi_flash_erase(&flash, 0x0, 4096*2) == 0
+ [ OK ]  test_spi_flash():65  spi_flash_erase(&flash, 0x0, 4096*2) == 0
          Verifying lower two sectors are blank...
  [ OK ]  Lower two sectors are blank
          Starting write/read/verify test vector tests...
- [ OK ]  test_spi_flash():83  spi_flash_write(&flash, 0x03, test_sf_vector1, sizeof(test_sf_vector1)) == 0
+ [ OK ]  test_spi_flash():86  spi_flash_write(&flash, 0x03, test_sf_vector1, sizeof(test_sf_vector1)) == 0
  [ OK ]  Wrote test vector 1 to 0x003-0x04e
- [ OK ]  test_spi_flash():86  spi_flash_read(&flash, 0x0, buf, sizeof(buf)) == 0
- [ OK ]  test_spi_flash():87  memcmp(buf, test_sf_vector_blank, 3) == 0
- [ OK ]  test_spi_flash():88  memcmp(buf+3, test_sf_vector1, sizeof(test_sf_vector1)) == 0
- [ OK ]  test_spi_flash():89  memcmp(buf+3+sizeof(test_sf_vector1), test_sf_vector_blank, 0x100-3-sizeof(test_sf_vector1)) == 0
+ [ OK ]  test_spi_flash():89  spi_flash_read(&flash, 0x0, buf, sizeof(buf)) == 0
+ [ OK ]  test_spi_flash():90  memcmp(buf, test_sf_vector_blank, 3) == 0
+ [ OK ]  test_spi_flash():91  memcmp(buf+3, test_sf_vector1, sizeof(test_sf_vector1)) == 0
+ [ OK ]  test_spi_flash():92  memcmp(buf+3+sizeof(test_sf_vector1), test_sf_vector_blank, 0x100-3-sizeof(test_sf_vector1)) == 0
  [ OK ]  Read test vector 1 verified 0x000-0x0ff
- [ OK ]  test_spi_flash():93  spi_flash_write(&flash, 0x100, test_sf_vector2, sizeof(test_sf_vector2)) == 0
+ [ OK ]  test_spi_flash():96  spi_flash_write(&flash, 0x100, test_sf_vector2, sizeof(test_sf_vector2)) == 0
  [ OK ]  Wrote test vector 2 to 0x100-0x1ff
          Verifying test vector 1 again
- [ OK ]  test_spi_flash():97  spi_flash_read(&flash, 0x0, buf, sizeof(buf)) == 0
- [ OK ]  test_spi_flash():98  memcmp(buf, test_sf_vector_blank, 3) == 0
- [ OK ]  test_spi_flash():99  memcmp(buf+3, test_sf_vector1, sizeof(test_sf_vector1)) == 0
- [ OK ]  test_spi_flash():100  memcmp(buf+3+sizeof(test_sf_vector1), test_sf_vector_blank, 0x100-3-sizeof(test_sf_vector1)) == 0
+ [ OK ]  test_spi_flash():100  spi_flash_read(&flash, 0x0, buf, sizeof(buf)) == 0
+ [ OK ]  test_spi_flash():101  memcmp(buf, test_sf_vector_blank, 3) == 0
+ [ OK ]  test_spi_flash():102  memcmp(buf+3, test_sf_vector1, sizeof(test_sf_vector1)) == 0
+ [ OK ]  test_spi_flash():103  memcmp(buf+3+sizeof(test_sf_vector1), test_sf_vector_blank, 0x100-3-sizeof(test_sf_vector1)) == 0
  [ OK ]  Read test vector 1 verified 0x000-0x0ff
- [ OK ]  test_spi_flash():103  spi_flash_read(&flash, 0x100, buf, sizeof(buf)) == 0
- [ OK ]  test_spi_flash():104  memcmp(buf, test_sf_vector2, sizeof(test_sf_vector2)) == 0
+ [ OK ]  test_spi_flash():106  spi_flash_read(&flash, 0x100, buf, sizeof(buf)) == 0
+ [ OK ]  test_spi_flash():107  memcmp(buf, test_sf_vector2, sizeof(test_sf_vector2)) == 0
  [ OK ]  Read test vector 2 verified 0x100-0x1ff
- [ OK ]  test_spi_flash():108  spi_flash_write(&flash, 0x200, test_sf_vector3, sizeof(test_sf_vector3)) == 0
+ [ OK ]  test_spi_flash():111  spi_flash_write(&flash, 0x200, test_sf_vector3, sizeof(test_sf_vector3)) == 0
  [ OK ]  Wrote test vector 3 to 0x200-0x301
- [ OK ]  test_spi_flash():111  spi_flash_read(&flash, 0x200, buf, sizeof(buf)) == 0
- [ OK ]  test_spi_flash():112  memcmp(buf, test_sf_vector3, sizeof(test_sf_vector3)) == 0
- [ OK ]  test_spi_flash():113  memcmp(buf+sizeof(test_sf_vector3), test_sf_vector_blank, 0x100-1) == 0
+ [ OK ]  test_spi_flash():114  spi_flash_read(&flash, 0x200, buf, sizeof(buf)) == 0
+ [ OK ]  test_spi_flash():115  memcmp(buf, test_sf_vector3, sizeof(test_sf_vector3)) == 0
+ [ OK ]  test_spi_flash():116  memcmp(buf+sizeof(test_sf_vector3), test_sf_vector_blank, 0x100-1) == 0
  [ OK ]  Read test vector 3 verified 0x200-0x3ff
- [ OK ]  test_spi_flash():117  spi_flash_write(&flash, 0x37f, test_sf_vector4, sizeof(test_sf_vector4)) == 0
+ [ OK ]  test_spi_flash():120  spi_flash_write(&flash, 0x37f, test_sf_vector4, sizeof(test_sf_vector4)) == 0
  [ OK ]  Wrote test vector 4 to 0x37f-0x5ff
- [ OK ]  test_spi_flash():121  spi_flash_read(&flash, 0x37f, buf, sizeof(buf)) == 0
- [ OK ]  test_spi_flash():122  memcmp(buf, test_sf_vector4, 512) == 0
- [ OK ]  test_spi_flash():124  spi_flash_read(&flash, 0x37f+512, buf, sizeof(buf)) == 0
- [ OK ]  test_spi_flash():125  memcmp(buf, test_sf_vector4+512, 128) == 0
- [ OK ]  test_spi_flash():126  memcmp(buf+128, test_sf_vector_blank, 384) == 0
+ [ OK ]  test_spi_flash():124  spi_flash_read(&flash, 0x37f, buf, sizeof(buf)) == 0
+ [ OK ]  test_spi_flash():125  memcmp(buf, test_sf_vector4, 512) == 0
+ [ OK ]  test_spi_flash():127  spi_flash_read(&flash, 0x37f+512, buf, sizeof(buf)) == 0
+ [ OK ]  test_spi_flash():128  memcmp(buf, test_sf_vector4+512, 128) == 0
+ [ OK ]  test_spi_flash():129  memcmp(buf+128, test_sf_vector_blank, 384) == 0
  [ OK ]  Read test vector 4 verified 0x37f-0x5ff
          Erasing entire chip... Press enter to continue.
- [ OK ]  test_spi_flash():133  spi_flash_erase(&flash, 0x0, flash.params->capacity) == 0
+ [ OK ]  test_spi_flash():136  spi_flash_erase(&flash, 0x0, flash.params->capacity) == 0
          Verifying lower 256kB is blank...
  [ OK ]  Lower 256kB is blank
          Starting pseudorandom data test... Press enter to continue.
@@ -140,79 +145,77 @@ Starting test test_spi_flash() (src/tests/test_spi_flash.c:28)
  [ OK ]  Wrote 256kB pseudorandom data
          Verifying 256kB pseudorandom data
  [ OK ]  Pseudorandom data matches!
- [ OK ]  All tests passed!
 arm-bmw > test i2c
 
-Starting test test_i2c() (src/tests/test_i2c.c:14)
+Starting test test_i2c() (app/selftest/tests/test_i2c.c:16)
          Testing transfer to non-existent slave address
          Press enter to start transfer...
- [ OK ]  test_i2c():28  i2c_transfer(&transaction) == I2C_ERROR_TIMEOUT
+ [ OK ]  test_i2c():30  i2c_transfer(&transaction) == I2C_ERROR_TIMEOUT
          I2C transaction start occurred? (y/n/r) y
  [ OK ]  I2C transaction start occurred?
          Testing transfer to existent slave address, 0 length
          Press enter to start transfer...
- [ OK ]  test_i2c():45  i2c_transfer(&transaction) == 0
+ [ OK ]  test_i2c():47  i2c_transfer(&transaction) == 0
          I2C transaction occured? (y/n/r) y
  [ OK ]  I2C transaction occured?
          Testing queued transfers to non-existent slave
          Press enter to start transfer...
- [ OK ]  test_i2c():74  transaction.complete == true
- [ OK ]  test_i2c():75  transaction2.complete == true
- [ OK ]  test_i2c():76  transaction3.complete == true
- [ OK ]  test_i2c():77  transaction.error == I2C_ERROR_TIMEOUT
- [ OK ]  test_i2c():78  transaction2.error == 0
- [ OK ]  test_i2c():79  transaction3.error == I2C_ERROR_TIMEOUT
+ [ OK ]  test_i2c():76  transaction.complete == true
+ [ OK ]  test_i2c():77  transaction2.complete == true
+ [ OK ]  test_i2c():78  transaction3.complete == true
+ [ OK ]  test_i2c():79  transaction.error == I2C_ERROR_TIMEOUT
+ [ OK ]  test_i2c():80  transaction2.error == 0
+ [ OK ]  test_i2c():81  transaction3.error == I2C_ERROR_TIMEOUT
          Three I2C transaction starts occurred? (y/n/r) y
  [ OK ]  Three I2C transaction starts occurred?
          Testing single write to I/O expander (i2c address 0x20)
          Press enter to start transfer...
- [ OK ]  test_i2c():98  i2c_transfer(&transaction) == 0
+ [ OK ]  test_i2c():100  i2c_transfer(&transaction) == 0
          Testing single read to I/O expander (i2c address 0x20)
          Press enter to start transfer...
- [ OK ]  test_i2c():113  i2c_transfer(&transaction) == 0
- [ OK ]  test_i2c():114  buf2[0] == 0xaa
+ [ OK ]  test_i2c():115  i2c_transfer(&transaction) == 0
+ [ OK ]  test_i2c():116  buf2[0] == 0xaa
          Testing double write to I/O expander (i2c address 0x20)
          Press enter to start transfer...
- [ OK ]  test_i2c():131  i2c_transfer(&transaction) == 0
+ [ OK ]  test_i2c():133  i2c_transfer(&transaction) == 0
          Testing double read to I/O expander (i2c address 0x20)
          Press enter to start transfer...
- [ OK ]  test_i2c():154  i2c_transfer(&transaction) == 0
- [ OK ]  test_i2c():155  buf2[0] = 0xbb
- [ OK ]  test_i2c():156  buf4[0] = 0xcc
+ [ OK ]  test_i2c():156  i2c_transfer(&transaction) == 0
+ [ OK ]  test_i2c():157  buf2[0] = 0xbb
+ [ OK ]  test_i2c():158  buf4[0] = 0xcc
          Testing single read to I/O expander (i2c address 0x20)
          Press enter to start transfer...
- [ OK ]  test_i2c():171  i2c_transfer(&transaction) == 0
- [ OK ]  test_i2c():172  buf2[0] == 0xbb
- [ OK ]  All tests passed!
+ [ OK ]  test_i2c():173  i2c_transfer(&transaction) == 0
+ [ OK ]  test_i2c():174  buf2[0] == 0xbb
 arm-bmw > test mcp23008
 
-Starting test test_mcp23008() (src/tests/test_mcp23008.c:14)
+Starting test test_mcp23008() (app/selftest/tests/test_mcp23008.c:16)
          Press enter to start MCP23008 test...
          Probing for MCP23008...
- [ OK ]  test_mcp23008():21  mcp23008_probe(&mcp, &I2C0, 0x20) == 0
+ [ OK ]  test_mcp23008():23  mcp23008_probe(&mcp, &I2C0, 0x20) == 0
  [ OK ]  Found MCP23008!
          Initializing P4-P7 to outputs with value 1
- [ OK ]  test_mcp23008():25  mcp23008_reg_write(&mcp, MCP_REG_OLAT, 0xf0) == 0
- [ OK ]  test_mcp23008():26  mcp23008_reg_write(&mcp, MCP_REG_IODIR, 0x0f) == 0
- [ OK ]  test_mcp23008():27  mcp23008_reg_write(&mcp, MCP_REG_IPOL, 0x00) == 0
+ [ OK ]  test_mcp23008():27  mcp23008_reg_write(&mcp, MCP_REG_OLAT, 0xf0) == 0
+ [ OK ]  test_mcp23008():28  mcp23008_reg_write(&mcp, MCP_REG_IODIR, 0x0f) == 0
+ [ OK ]  test_mcp23008():29  mcp23008_reg_write(&mcp, MCP_REG_IPOL, 0x00) == 0
          Press enter to turn on LED1...
- [ OK ]  test_mcp23008():31  mcp23008_reg_write(&mcp, MCP_REG_GPIO, ~(1<<4) & 0xf0) == 0
+ [ OK ]  test_mcp23008():33  mcp23008_reg_write(&mcp, MCP_REG_GPIO, ~(1<<4) & 0xf0) == 0
          LED1 on? (y/n/r) y
  [ OK ]  LED1 on?
          Press enter to turn on LED2...
- [ OK ]  test_mcp23008():36  mcp23008_reg_write(&mcp, MCP_REG_GPIO, ~(1<<5) & 0xf0) == 0
+ [ OK ]  test_mcp23008():38  mcp23008_reg_write(&mcp, MCP_REG_GPIO, ~(1<<5) & 0xf0) == 0
          LED2 on? (y/n/r) y
  [ OK ]  LED2 on?
          Press enter to turn on LED3...
- [ OK ]  test_mcp23008():41  mcp23008_reg_write(&mcp, MCP_REG_GPIO, ~(1<<6) & 0xf0) == 0
+ [ OK ]  test_mcp23008():43  mcp23008_reg_write(&mcp, MCP_REG_GPIO, ~(1<<6) & 0xf0) == 0
          LED3 on? (y/n/r) y
  [ OK ]  LED3 on?
          Press enter to turn on LED4...
- [ OK ]  test_mcp23008():46  mcp23008_reg_write(&mcp, MCP_REG_GPIO, ~(1<<7) & 0xf0) == 0
+ [ OK ]  test_mcp23008():48  mcp23008_reg_write(&mcp, MCP_REG_GPIO, ~(1<<7) & 0xf0) == 0
          LED4 on? (y/n/r) y
  [ OK ]  LED4 on?
          Press enter to turn on all LEDs...
- [ OK ]  test_mcp23008():51  mcp23008_reg_write(&mcp, MCP_REG_GPIO, 0x00) == 0
+ [ OK ]  test_mcp23008():53  mcp23008_reg_write(&mcp, MCP_REG_GPIO, 0x00) == 0
          All LEDs on? (y/n/r) y
  [ OK ]  All LEDs on?
          Polling GPIOs
@@ -224,12 +227,11 @@ Starting test test_mcp23008() (src/tests/test_mcp23008.c:14)
  [ OK ]  Got switch 1 on!
          Waiting for switch 2 on...
  [ OK ]  Got switch 2 on!
- [ OK ]  All tests passed!
 arm-bmw > test bmw_ui
 
-Starting test test_bmw_ui() (src/tests/test_bmw_ui.c:12)
+Starting test test_bmw_ui() (app/selftest/tests/test_bmw_ui.c:13)
          Initializing BMW UI
- [ OK ]  test_bmw_ui():15  bmw_ui_init() == 0
+ [ OK ]  test_bmw_ui():16  bmw_ui_init() == 0
          Press enter to turn on LED1...
          LED1 on? (y/n/r) y
  [ OK ]  LED1 on?
@@ -260,22 +262,21 @@ Starting test test_bmw_ui() (src/tests/test_bmw_ui.c:12)
  [ OK ]  Posedge on switch 0
          Waiting for negedge on switch 0
  [ OK ]  Negedge on switch 0
- [ OK ]  All tests passed!
 arm-bmw > time
-system time: 141678 ms
+system time: 184162 ms
 arm-bmw > time
-system time: 144160 ms
+system time: 186532 ms
 arm-bmw > led
 Usage: led <on/off> <LED number>
 arm-bmw > led on 1
 arm-bmw > led on 4
 arm-bmw > buttons
 Press 'q' to quit.
-BT0: 0  BT1: 0  SW0: 0  SW1: 1  
+BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 1  BT1: 0  SW0: 0  SW1: 0  BT0: 1  BT1: 0  SW0: 0  SW1: 0  BT0: 1  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 1  SW0: 0  SW1: 0  BT0: 0  BT1: 1  SW0: 0  SW1: 0  BT0: 0  BT1: 1  SW0: 0  SW1: 0  BT0: 0  BT1: 1  SW0: 0  SW1: 0  BT0: 0  BT1: 1  SW0: 0  SW1: 0  BT0: 0  BT1: 1  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  BT0: 0  BT1: 0  SW0: 0  SW1: 0  
 arm-bmw > sf
 Usage: sf probe
 Usage: sf read [address=0] [length=256]
-arm-bmw > sf probe
+arm-bmw > sfp ro probe
 spi_flash_probe(): 0
 arm-bmw > sf read
 71 7d 34 ca c9 03 aa 37  48 d8 9f 66 6d 99 77 21  ab 3c ea a9 3c a9 28 18  e9 86 b3 a7 a9 48 6b f1 
@@ -287,4 +288,3 @@ af 06 14 da 4d 5e 2c 8e  c3 28 97 ea 41 6a fd 4c  f9 f5 ea 8b 0d 5a 14 28  6f 76
 7c 73 29 71 4d 76 06 b7  da 81 83 0b b5 db f3 63  cc db 12 f6 46 f5 01 d7  ce ac c2 19 55 9d 8a 88 
 72 62 2a 02 b0 3f 99 f7  87 8f c1 d5 d1 02 11 5a  39 3d 67 45 27 93 12 bf  9b 6c a8 81 55 1c 46 88 
 arm-bmw > 
-
