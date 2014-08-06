@@ -5,6 +5,8 @@ endif
 
 PROJECT = arm-bmw-$(APP)
 
+LPC21ISP_SERIAL_PATH = /dev/ttyUSB1
+
 #########################################################################
 
 APPDIR = app
@@ -82,22 +84,28 @@ all:
 	$(MAKE) $(PROJECT).hex
 	$(MAKE) $(PROJECT).bin
 
+.PHONY: flash
 flash: $(PROJECT).elf
 	openocd -s openocd -c "set PROGFILE $(PROJECT).elf" -f openocd/flash.cfg
 
+.PHONY: debug
 debug: $(PROJECT).elf
 	openocd -s openocd -f openocd/debug.cfg
 
+.PHONY: gdb
 gdb: $(PROJECT).elf
 	$(GDB) $(PROJECT).elf
 
+.PHONY: flashisp
 flashisp: $(PROJECT).hex
-	lpc21isp -verify $(PROJECT).hex /dev/ttyUSB1 115200 12000000
+	lpc21isp -verify $(PROJECT).hex $(LPC21ISP_SERIAL_PATH) 115200 12000000
 
+.PHONY: stats
 stats: $(PROJECT).elf
 	$(OBJDUMP) -th $(PROJECT).elf
 	$(SIZE) $(PROJECT).elf
 
+.PHONY: clean
 clean:
 	$(REMOVE) -r $(OBJDIR)
 	$(REMOVE) $(BMW_LIB)
@@ -118,6 +126,8 @@ $(PROJECT).elf: $(BMW_LIB) $(APP_OBJECTS) $(LINKER_SCRIPT)
 
 $(BMW_LIB): $(BMW_OBJECTS)
 	$(AR) rcs $@ $(BMW_OBJECTS)
+
+#########################################################################
 
 $(OBJDIR)/%.o : %.c
 	@mkdir -p $(@D)
