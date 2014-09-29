@@ -5,7 +5,7 @@ endif
 
 PROJECT = arm-bmw-$(APP)
 
-LPC21ISP_SERIAL_PATH = /dev/ttyUSB1
+LPC21ISP_SERIAL_PATH = /dev/ttyUSB0
 
 #########################################################################
 
@@ -98,7 +98,7 @@ gdb: $(PROJECT).elf
 
 .PHONY: flashisp
 flashisp: $(PROJECT).hex
-	lpc21isp -verify $(PROJECT).hex $(LPC21ISP_SERIAL_PATH) 115200 12000000
+	lpc21isp -verify $(PROJECT).hex $(LPC21ISP_SERIAL_PATH) 115200 12000
 
 .PHONY: stats
 stats: $(PROJECT).elf
