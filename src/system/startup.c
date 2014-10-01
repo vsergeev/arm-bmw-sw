@@ -13,8 +13,12 @@ extern int main(void);
 
 #define WEAK_ALIAS(x) __attribute__ ((weak, alias(#x)))
 
-/* Cortex M0 core interrupt handlers */
-void Reset_Handler(void);
+/** Cortex M0 core interrupt handlers **/
+
+/* Word align the reset handler to keep on-chip rom bootloader happy which
+ * needs a word aligned address for code execution after programming. */
+void Reset_Handler(void) __attribute__ ((aligned (4)));
+
 void NMI_Handler(void) WEAK_ALIAS(Dummy_Handler);
 void HardFault_Handler(void) WEAK_ALIAS(Dummy_Handler);
 void SVC_Handler(void) WEAK_ALIAS(Dummy_Handler);
