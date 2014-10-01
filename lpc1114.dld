@@ -20,15 +20,14 @@ SECTIONS {
 
     .text :
     {
-        *(.text)
-        *(.rodata)
+        *(.text*)
         *(.rodata*)
     } >flash
 
     .data :
     {
         _start_data = .;
-        *(.data)
+        *(.data*)
         _end_data = .;
     } >sram AT >flash
 
@@ -39,7 +38,7 @@ SECTIONS {
     .bss :
     {
         _start_bss = .;
-        *(.bss)
+        *(.bss*)
         _end_bss = .;
     } >sram
 
