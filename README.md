@@ -4,8 +4,6 @@ A lightweight software library and selftest application for the [arm-bmw](http:/
 
 Git: `git clone https://github.com/vsergeev/arm-bmw-sw.git`
 
-Git: `git clone http://git.theanine.io/arm-bmw-sw.git`
-
 ## Self-test Application
 
 The self-test application provides a basic CLI over the UART with hardware unit tests and utility programs. The UART is configured for 115200 8N1, and the CLI may be accessed with your favorite serial port program.
