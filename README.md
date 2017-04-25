@@ -1,6 +1,6 @@
 # arm-bmw-sw
 
-A lightweight software library and selftest application for the [arm-bmw](http://theanine.io/projects/arm-bmw/) development board.
+A lightweight software library and selftest application for the [arm-bmw](https://github.com/vsergeev/arm-bmw-hw) development board.
 
 Git: `git clone https://github.com/vsergeev/arm-bmw-sw.git`
 
